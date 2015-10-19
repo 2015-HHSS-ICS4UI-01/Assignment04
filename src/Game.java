@@ -1,8 +1,10 @@
+
+import java.util.Random;
+
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author lamonta
@@ -14,7 +16,8 @@ public class Game {
      */
     public static void main(String[] args) {
 
-        Doctor doctor = new Doctor(3, 5);
+        Random random = new Random();
+        Doctor doctor = new Doctor(random.nextInt(8), random.nextInt(8));
         GameBoard board = new GameBoard();
 
     }

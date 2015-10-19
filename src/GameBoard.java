@@ -130,6 +130,7 @@ public class GameBoard extends JComponent implements MouseListener {
         int x = (e.getX()) / TILE_SIZE;
         int y = (e.getY()) / TILE_SIZE;
         Color colour = null;
+
         //get the row and column of the click
         if (y < 8 && y >= 0 && x < 8 && x >= 0) {
             click = new Coordinate(x, y);
