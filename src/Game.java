@@ -14,5 +14,7 @@ public class Game {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        Doctor name=new Doctor(1,7);
+        
     }
 }
