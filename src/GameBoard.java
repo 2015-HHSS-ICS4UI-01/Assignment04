@@ -18,7 +18,9 @@ import javax.swing.JFrame;
  */
 public class GameBoard extends JComponent implements MouseListener {
 
-    private Color[][] grid = new Color[8][8];
+    private final int BOARD_WIDTH;
+    private final int BOARD_HEIGHT;
+    private Color[][] grid = null;
     private String message = "";
     private JFrame window;
     private final int TILE_SIZE = 100;
@@ -27,13 +29,22 @@ public class GameBoard extends JComponent implements MouseListener {
     /**
      * Creates a brand new empty 8x8 Board
      */
-    public GameBoard() {
+    public GameBoard(int width, int height) {
+        
+        // set board width and height
+        BOARD_WIDTH = width;
+        BOARD_HEIGHT = height;
+        
+        // initialize the grid
+        grid = new Color[BOARD_WIDTH][BOARD_HEIGHT];
+        
         // sets all positions to be null
-        for (int row = 0; row < 8; row++) {
-            for (int col = 0; col < 8; col++) {
+        for (int row = 0; row < BOARD_WIDTH; row++) {
+            for (int col = 0; col < BOARD_HEIGHT; col++) {
                 grid[row][col] = null;
             }
         }
+        
         // create the frame to display the board
         window = new JFrame("Game Board");
         // add the board to the frame
@@ -41,7 +52,7 @@ public class GameBoard extends JComponent implements MouseListener {
         // make the frame visible
         window.setVisible(true);
         //set the size of our board
-        this.setPreferredSize(new Dimension(8 * TILE_SIZE + 50, 8 * TILE_SIZE + 100));
+        this.setPreferredSize(new Dimension(BOARD_WIDTH * TILE_SIZE + 50, BOARD_HEIGHT * TILE_SIZE + 100));
         // resize the window
         window.pack();
         //set the X
@@ -57,8 +68,8 @@ public class GameBoard extends JComponent implements MouseListener {
      */
     @Override
     public void paintComponent(Graphics g) {
-        for (int row = 0; row < 8; row++) {
-            for (int col = 0; col < 8; col++) {
+        for (int row = 0; row < BOARD_WIDTH; row++) {
+            for (int col = 0; col < BOARD_HEIGHT; col++) {
                 // alternate the colours of the grid
                 if ((row + col) % 2 == 0) {
                     g.setColor(Color.WHITE);
