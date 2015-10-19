@@ -13,6 +13,12 @@ public class Game {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        TheDoctor doctor = new TheDoctor(3, 5);
+        GameBoard board = new GameBoard();
     }
+
+    public void move(int x, int y) {
+    }
+    
+    
 }

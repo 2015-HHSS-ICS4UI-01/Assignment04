@@ -12,112 +12,108 @@ import javax.swing.JFrame;
  * and open the template in the editor.
  */
 /**
- * A class that represents an 8x8 Game Board like used in Checkers
+ * A class that represents an 8x8 game board not unlike one used in checkers.
  *
- * @author lamonta
+ * @author haidj9901
  */
 public class GameBoard extends JComponent implements MouseListener {
 
-    private Color[][] grid = new Color[8][8];
     private String message = "";
     private JFrame window;
-    private final int TILE_SIZE = 100;
-    private Coordinate click = null;
+    private final int TILE_SIZE = 50;
+    private final int BOARD_LENGTH = 12;
+    private final int BOARD_WIDTH = 12;
+    private Color[][] grid = new Color[BOARD_WIDTH][BOARD_LENGTH];
+    public Coordinate click = null;
 
-    /**
-     * Creates a brand new empty 8x8 Board
-     */
     public GameBoard() {
-        // sets all positions to be null
-        for (int row = 0; row < 8; row++) {
-            for (int col = 0; col < 8; col++) {
-                grid[row][col] = null;
+        for (int x = 0; x < BOARD_WIDTH; x++) {
+            for (int y = 0; y < BOARD_LENGTH; y++) {
+                grid[x][y] = null;
             }
         }
-        // create the frame to display the board
+
+        //creating the frame
         window = new JFrame("Game Board");
-        // add the board to the frame
         window.add(this);
-        // make the frame visible
-        window.setVisible(true);
-        //set the size of our board
-        this.setPreferredSize(new Dimension(8 * TILE_SIZE + 50, 8 * TILE_SIZE + 100));
-        // resize the window
+        this.setPreferredSize(new Dimension(BOARD_WIDTH * TILE_SIZE + TILE_SIZE, BOARD_LENGTH * TILE_SIZE + TILE_SIZE / 2));
         window.pack();
-        //set the X
+        window.setVisible(true);
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        // add the mouse mouse listener
+
+        //initializing mouse listener
         this.addMouseListener(this);
     }
 
     /**
-     * Drawing the Game Board
+     * Drawing the game board
      *
      * @param g Graphics object to draw with
      */
     @Override
     public void paintComponent(Graphics g) {
-        for (int row = 0; row < 8; row++) {
-            for (int col = 0; col < 8; col++) {
-                // alternate the colours of the grid
-                if ((row + col) % 2 == 0) {
-                    g.setColor(Color.WHITE);
+        for (int x = 0; x < BOARD_WIDTH; x++) {
+            for (int y = 0; y < BOARD_LENGTH; y++) {
+                //alternates colors
+                if ((x + y) % 2 == 0) {
+                    g.setColor(Color.white);
                 } else {
-                    g.setColor(Color.BLACK);
+                    g.setColor(Color.black);
                 }
-                // draws a single grid spot
-                g.fillRect(col * TILE_SIZE + TILE_SIZE / 4, row * TILE_SIZE + TILE_SIZE / 4, TILE_SIZE, TILE_SIZE);
-                // draw a piece
-                if (grid[row][col] != null) {
-                    g.setColor(grid[row][col]);
-                    g.fillOval(col * TILE_SIZE + TILE_SIZE / 2, row * TILE_SIZE + TILE_SIZE / 2, TILE_SIZE / 2, TILE_SIZE / 2);
+                //draws a single spot
+                g.fillRect(x * TILE_SIZE + TILE_SIZE / 2, y * TILE_SIZE + TILE_SIZE / 4, TILE_SIZE, TILE_SIZE);
+                if (grid[x][y] != null) {
+                    g.setColor(grid[x][y]);
+                    g.fillOval(x * TILE_SIZE + TILE_SIZE / 2, y * TILE_SIZE + TILE_SIZE / 4, TILE_SIZE, TILE_SIZE);
                 }
             }
         }
-        g.setColor(Color.BLACK);
-        g.drawString(message, TILE_SIZE/4, TILE_SIZE*8 + TILE_SIZE/2);
+        g.setColor(Color.black);
+        g.drawString(message, TILE_SIZE / 2, TILE_SIZE * 8 + 3 * TILE_SIZE / 8);
     }
 
     /**
-     * Place a piece of a specific colour on the board
+     * places a piece of a specific colour on the board
      *
-     * @param row the row at which to place the piece
-     * @param col the column at which to place the piece
-     * @param colour the colour to make the piece
+     * @param x the column at which to place the piece
+     * @param y the row at which to place the piece
+     * @param colour the colour of the piece
      */
-    public void putPiece(int row, int col, Color colour) {
-        grid[row][col] = colour;
+    public void putPiece(int x, int y, Color colour) {
+        if (x >= 0 || y >= 0) {
+            grid[x][y] = colour;
+        } else {
+            message = "Please enter a valid position";
+        }
         repaint();
     }
 
     /**
-     * Removes a piece that is on the board
+     * removes a piece from the board
      *
-     * @param row the row to remove the piece from
-     * @param col the column to remove the piece from
+     * @param x the column at which the piece is found
+     * @param y the row at which the piece is found
      */
-    public void removePiece(int row, int col) {
-        grid[row][col] = null;
+    public void removePiece(int x, int y) {
+        grid[x][y] = null;
         repaint();
     }
 
     /**
-     * Removes all piece from the board
+     * removes all pieces from the board
      */
     public void clearBoard() {
-        // sets all positions to be null
-        for (int row = 0; row < 8; row++) {
-            for (int col = 0; col < 8; col++) {
-                grid[row][col] = null;
+        for (int x = 0; x < BOARD_WIDTH; x++) {
+            for (int y = 0; y < BOARD_LENGTH; y++) {
+                grid[x][y] = null;
             }
         }
-        repaint();
     }
 
     /**
-     * Displays a message on the game area
+     * displays a message to the user to explain what is happening
      *
-     * @param theMessage the message to display
+     * @param message the message to be displayed
      */
     public void setMessage(String theMessage) {
         message = theMessage;
@@ -125,74 +121,58 @@ public class GameBoard extends JComponent implements MouseListener {
     }
 
     public void printBoard() {
-        for (int row = 0; row < 8; row++) {
-            for (int col = 0; col < 8; col++) {
-                if (grid[row][col] == Color.RED) {
+        for (int x = 0; x < BOARD_WIDTH; x++) {
+            for (int y = 0; y < BOARD_LENGTH; y++) {
+                if (grid[y][x] == Color.red) {
                     System.out.print("R  ");
-                } else if (grid[row][col] == Color.BLUE) {
+                } else if (grid[y][x] == Color.blue) {
                     System.out.print("B  ");
-                } else if (grid[row][col] == null) {
+                } else if (grid[x][y] == null) {
                     System.out.print("_  ");
                 }
             }
-            System.out.println("");
+            System.out.println();
         }
         System.out.println(message);
-        System.out.println("");
+        System.out.println();
     }
 
-    public Coordinate getClick(){
-        // wipe out the previous click
+    public Coordinate getClick() {
         click = null;
-        // wait for a click to happen
-        while(click == null){
-            // do nothing
-            // wait for click to happen
-            try{
+        while (click == null) {
+            try {
                 Thread.sleep(1);
-            }catch(Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
         return click;
     }
-    
+
     @Override
     public void mouseClicked(MouseEvent e) {
-        
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
-        // get x and y of click
-        // shift them so the top and left boarders are gone
-        int x = e.getX() - TILE_SIZE/4;
-        int y = e.getY() - TILE_SIZE/4;
-        
-        // get the row and column of the click
-        int row = y / TILE_SIZE;
-        int col = x / TILE_SIZE;
-        
-        // validate the coordinate
-        if(row >= 0 && row <= 7 
-                && col >= 0 && col <= 7){
-            click = new Coordinate(row,col);
+        int x = (e.getX() - TILE_SIZE / 2) / TILE_SIZE;
+        int y = (e.getY() - TILE_SIZE / 4) / TILE_SIZE;
+
+
+        if (x >= 0 && x <= BOARD_LENGTH - 1 && y >= 0 && y <= BOARD_WIDTH) {
+            click = new Coordinate(x, y);
         }
-        
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        
     }
 
     @Override
     public void mouseEntered(MouseEvent e) {
-        
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
-        
     }
 }
