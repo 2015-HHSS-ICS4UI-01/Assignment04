@@ -19,8 +19,9 @@ public class Dalek {
     }
     
     
-    public void advanceTowards(Doctor doc){
-        
+    public void advanceTowards(Doctor paul){
+        if(doc.getow)
+            
     }
     
     public void crash(){
