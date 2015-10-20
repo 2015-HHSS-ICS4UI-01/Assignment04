@@ -19,28 +19,29 @@ public class Game {
         // TODO code application logic here
         GameBoard board = new GameBoard();
         
-        Doctor paul = new Doctor(0,0);
+        Doctor paul = new Doctor((int)(Math.random()*8),(int)(Math.random()*8));
         Dalek d1 = new Dalek ((int)(Math.random()*8),(int)(Math.random()*8));
         Dalek d2 = new Dalek ((int)(Math.random()*8),(int)(Math.random()*8));
         Dalek d3 = new Dalek ((int)(Math.random()*8),(int)(Math.random()*8));
         
+        
         int paulRow = paul.getRow();
         int paulCol = paul.getCol();
-        board.putPiece(paulRow, paulCol, Color.blue);
+        board.putPiece(paulRow, paulCol, Color.lightGray);
         
         int d1Row = d1.getRow();
         int d1Col = d1.getCol();
-        board.putPiece(d1Row, d1Col, Color.yellow);
+        board.putPiece(d1Row, d1Col, Color.orange);
         
         int d2Row = d2.getRow();
         int d2Col = d2.getCol();
-        board.putPiece(d2Row, d2Col, Color.yellow);
+        board.putPiece(d2Row, d2Col, Color.orange);
         
         int d3Row = d3.getRow();
         int d3Col = d3.getCol();
-        board.putPiece(d3Row, d3Col, Color.yellow);
+        board.putPiece(d3Row, d3Col, Color.orange);
         
-
         
+  
     }
 }

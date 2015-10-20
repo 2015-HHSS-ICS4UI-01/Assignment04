@@ -19,7 +19,6 @@ public class Doctor {
     
     public void move(int row, int col){
         
-        
     }
     
     public int getRow(){
