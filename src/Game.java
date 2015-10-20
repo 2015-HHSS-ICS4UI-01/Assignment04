@@ -20,9 +20,9 @@ public class Game {
         GameBoard board = new GameBoard();
         
         Doctor paul = new Doctor(0,0);
-        Dalek d1 = new Dalek ((int)Math.random()* 8,(int)Math.random()* 8);
-        Dalek d2 = new Dalek ((int)Math.random()* 8,(int)Math.random()* 8);
-        Dalek d3 = new Dalek ((int)Math.random()* 8,(int)Math.random()* 8);
+        Dalek d1 = new Dalek ((int)(Math.random()*8),(int)(Math.random()*8));
+        Dalek d2 = new Dalek ((int)(Math.random()*8),(int)(Math.random()*8));
+        Dalek d3 = new Dalek ((int)(Math.random()*8),(int)(Math.random()*8));
         
         int paulRow = paul.getRow();
         int paulCol = paul.getCol();
@@ -39,6 +39,8 @@ public class Game {
         int d3Row = d3.getRow();
         int d3Col = d3.getCol();
         board.putPiece(d3Row, d3Col, Color.yellow);
+        
+
         
     }
 }

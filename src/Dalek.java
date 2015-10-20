@@ -14,8 +14,8 @@ public class Dalek {
     private boolean hasCrashed;
     
     public Dalek(int startRow, int startCol){
-      
-        
+      row = startRow;
+      col = startCol;  
     }
     
     
