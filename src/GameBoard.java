@@ -18,15 +18,20 @@ import javax.swing.JFrame;
  */
 public class GameBoard extends JComponent implements MouseListener {
 
+    //initializing class variables
     private String message = "";
     private JFrame window;
-    private final int TILE_SIZE = 50;
-    private final int BOARD_LENGTH = 12;
-    private final int BOARD_WIDTH = 12;
-    private Color[][] grid = new Color[BOARD_WIDTH][BOARD_LENGTH];
+    private final int TILE_SIZE = 75; //side length of each tile
+    private final int BOARD_LENGTH = 8; //length of the board
+    private final int BOARD_WIDTH = 8; //width of the board
+    private Color[][] grid = new Color[BOARD_WIDTH][BOARD_LENGTH]; //2D array of colors based on board length and width
     public Coordinate click = null;
 
+    /**
+     * GameBoard constructor used to initialize the grid and JFrame window
+     */
     public GameBoard() {
+        //assign null value to each position on the board
         for (int x = 0; x < BOARD_WIDTH; x++) {
             for (int y = 0; y < BOARD_LENGTH; y++) {
                 grid[x][y] = null;
@@ -36,7 +41,7 @@ public class GameBoard extends JComponent implements MouseListener {
         //creating the frame
         window = new JFrame("Game Board");
         window.add(this);
-        this.setPreferredSize(new Dimension(BOARD_WIDTH * TILE_SIZE + TILE_SIZE, BOARD_LENGTH * TILE_SIZE + TILE_SIZE / 2));
+        this.setPreferredSize(new Dimension(BOARD_WIDTH * TILE_SIZE + TILE_SIZE, BOARD_LENGTH * TILE_SIZE + TILE_SIZE));
         window.pack();
         window.setVisible(true);
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -47,7 +52,6 @@ public class GameBoard extends JComponent implements MouseListener {
 
     /**
      * Drawing the game board
-     *
      * @param g Graphics object to draw with
      */
     @Override
@@ -60,16 +64,20 @@ public class GameBoard extends JComponent implements MouseListener {
                 } else {
                     g.setColor(Color.black);
                 }
-                //draws a single spot
-                g.fillRect(x * TILE_SIZE + TILE_SIZE / 2, y * TILE_SIZE + TILE_SIZE / 4, TILE_SIZE, TILE_SIZE);
+                //draws each grid on the board
+                g.fillRect(x * TILE_SIZE + TILE_SIZE / 2, y * TILE_SIZE + TILE_SIZE / 2, TILE_SIZE, TILE_SIZE);
+                
+                //draws any pieces on the board
                 if (grid[x][y] != null) {
                     g.setColor(grid[x][y]);
-                    g.fillOval(x * TILE_SIZE + TILE_SIZE / 2, y * TILE_SIZE + TILE_SIZE / 4, TILE_SIZE, TILE_SIZE);
+                    g.fillOval(x * TILE_SIZE + TILE_SIZE / 2, y * TILE_SIZE + TILE_SIZE / 2, TILE_SIZE, TILE_SIZE);
                 }
             }
         }
+        
+        //outputs any messages that are on the board
         g.setColor(Color.black);
-        g.drawString(message, TILE_SIZE / 2, TILE_SIZE * 8 + 3 * TILE_SIZE / 8);
+        g.drawString(message, TILE_SIZE / 2, TILE_SIZE * 8 + 3 * TILE_SIZE / 4);
     }
 
     /**
@@ -120,23 +128,27 @@ public class GameBoard extends JComponent implements MouseListener {
         repaint();
     }
 
-    public void printBoard() {
-        for (int x = 0; x < BOARD_WIDTH; x++) {
-            for (int y = 0; y < BOARD_LENGTH; y++) {
-                if (grid[y][x] == Color.red) {
-                    System.out.print("R  ");
-                } else if (grid[y][x] == Color.blue) {
-                    System.out.print("B  ");
-                } else if (grid[x][y] == null) {
-                    System.out.print("_  ");
-                }
-            }
-            System.out.println();
-        }
-        System.out.println(message);
-        System.out.println();
-    }
+//    public void printBoard() {
+//        for (int x = 0; x < BOARD_WIDTH; x++) {
+//            for (int y = 0; y < BOARD_LENGTH; y++) {
+//                if (grid[y][x] == Color.red) {
+//                    System.out.print("R  ");
+//                } else if (grid[y][x] == Color.blue) {
+//                    System.out.print("B  ");
+//                } else if (grid[x][y] == null) {
+//                    System.out.print("_  ");
+//                }
+//            }
+//            System.out.println();
+//        }
+//        System.out.println(message);
+//        System.out.println();
+//    }
 
+    /**
+     * waits for and stores the coordinates of a mouse click
+     * @return the Coordinate class with the x and y coordinates of the click
+     */
     public Coordinate getClick() {
         click = null;
         while (click == null) {
@@ -153,10 +165,14 @@ public class GameBoard extends JComponent implements MouseListener {
     public void mouseClicked(MouseEvent e) {
     }
 
+    /**
+     * Event that handles when a mouse is clicked
+     * @param e 
+     */
     @Override
     public void mousePressed(MouseEvent e) {
         int x = (e.getX() - TILE_SIZE / 2) / TILE_SIZE;
-        int y = (e.getY() - TILE_SIZE / 4) / TILE_SIZE;
+        int y = (e.getY() - TILE_SIZE / 2) / TILE_SIZE;
 
 
         if (x >= 0 && x <= BOARD_LENGTH - 1 && y >= 0 && y <= BOARD_WIDTH) {
