@@ -14,6 +14,7 @@ public class Dalek {
     private boolean hasCrashed;
     
     public Dalek(int startRow, int startCol){
+      
         
     }
     
@@ -35,11 +36,11 @@ public class Dalek {
     
     
     public int getRow(){
-        
+        return row;
     }
     
     public int getCol(){
-        
+        return col;
     }
     
 }
