@@ -41,7 +41,7 @@ public class Dalek {
     }
 
     public void crash() {
-        
+        hasCrashed = true;
     }
 
     public boolean hasCrashed() {
@@ -52,7 +52,7 @@ public class Dalek {
         return this.row;
     }
 
-    public int geCol() {
+    public int getCol() {
         return this.col;
     }
 }
