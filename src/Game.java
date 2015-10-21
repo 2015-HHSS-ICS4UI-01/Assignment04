@@ -45,7 +45,6 @@ public class Game {
             Coordinate click = board.getClick();
             //figure out where click           
             board.removePiece(paul.getRow(), paul.getCol());
-
             paul.move(click.getRow(), click.getCol());
             paulRow = paul.getRow();
             paulCol = paul.getCol();
