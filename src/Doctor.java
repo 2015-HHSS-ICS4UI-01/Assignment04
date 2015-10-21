@@ -32,6 +32,17 @@ public class Doctor{
         return col;
     }
     
+    public void moveTo(Coordinate coordinate)
+    {
+        this.row = coordinate.getRow();
+        this.col = coordinate.getCol();
+    }
+    public void moveTo(int row, int col)
+    {
+        this.row = row;
+        this.col = col;
+    }
+    
     public Color getColor()
     {
         return color;

@@ -32,9 +32,13 @@ public class Game {
         while (gameon)
         {
             Coordinate clickPoint = board.getClick();
-            if (clickPoint != null)
+            if (withinWalkingRange(doctor, clickPoint))
             {
-                //board.putPiece(clickPoint.getRow(), clickPoint.getCol(), Color.RED);
+                moveDoctor(doctor, clickPoint, board);
+            }
+            else
+            {
+                teleportDoctor(doctor, board);
             }
         }
     }
@@ -42,6 +46,10 @@ public class Game {
     public static void addDoctor(Doctor doctor, GameBoard board)
     {
         board.putPiece(doctor.getRow(), doctor.getCol(), doctor.getColor());
+    }
+    public static void removeDoctor(Doctor doctor, GameBoard board)
+    {
+        board.removePiece(doctor.getRow(), doctor.getCol());
     }
     
     public static void addDaleks(Dalek[] daleks, GameBoard board)
@@ -86,22 +94,20 @@ public class Game {
         // spawn each dalek in a random location
         for (int i = 0; i < numDaleks; i ++)
         {
-            int col = 0;
-            int row = 0;
+            Coordinate randCoordinate = null;
             do {
-                row = (int)(Math.random()*board.getBoardWidth());
-                col = (int)(Math.random()*board.getBoardHeight());
-            }while (!isValidSpawnLocation(daleks, i, row, col));
-            daleks[i] = new Dalek(row, col);
+                randCoordinate = genRandomCoordinate(board);
+            }while (!isValidSpawnLocation(daleks, i, randCoordinate));
+            daleks[i] = new Dalek(randCoordinate);
         }
         return daleks;
     }
     
-    public static boolean isValidSpawnLocation(Dalek[] daleks, int lastDalekIndex, int row, int col)
+    public static boolean isValidSpawnLocation(Dalek[] daleks, int lastDalekIndex, Coordinate coordinate)
     {
         for (int i = 0; i < lastDalekIndex; i++)
         {
-            if (daleks[i].getRow() == row && daleks[i].getCol() == col)
+            if (daleks[i].getRow() == coordinate.getRow() && daleks[i].getCol() == coordinate.getCol())
             {
                 return false;
             }
@@ -118,6 +124,33 @@ public class Game {
             }
         }
         return true;
+    }
+    
+    public static boolean withinWalkingRange(Doctor doctor, Coordinate click)
+    {
+        int horizontalDistance = Math.abs(click.getRow() - doctor.getRow());
+        int verticalDistance = Math.abs(click.getCol() - doctor.getCol());
+        
+        return horizontalDistance <= 1 && verticalDistance <= 1;
+    }
+    
+    public static void moveDoctor(Doctor doctor, Coordinate click, GameBoard board)
+    {
+        removeDoctor(doctor, board);
+        doctor.moveTo(click);
+        addDoctor(doctor, board);
+    }
+    
+    public static void teleportDoctor(Doctor doctor, GameBoard board)
+    {
+        removeDoctor(doctor, board);
+    }
+    
+    public static Coordinate genRandomCoordinate(GameBoard board)
+    {
+        int row = (int)(Math.random()*board.getBoardWidth());
+        int col = (int)(Math.random()*board.getBoardHeight());
+        return new Coordinate(row, col);
     }
     
 }

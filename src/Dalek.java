@@ -16,10 +16,10 @@ public class Dalek {
     private int col = 0;
     private final Color color = Color.ORANGE;
     
-    public Dalek(int row, int col)
+    public Dalek(Coordinate coordinate)
     {
-        this.row = row;
-        this.col = col;
+        this.row = coordinate.getRow();
+        this.col = coordinate.getCol();
     }
     
     public Color getColor()
