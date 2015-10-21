@@ -11,7 +11,7 @@ public class Dalek {
 
     private int x;
     private int y;
-    private boolean hasCrashed;
+    private boolean hasCrashed = false;
 
     public Dalek(int x, int y) {
         this.x = x;
@@ -31,7 +31,12 @@ public class Dalek {
         }
     }
 
-    public void crashes(boolean hasCrashed) {
+    public void crash() {
+        hasCrashed = true;
+    }
+
+    public boolean hasCrashed() {
+        return this.hasCrashed;
     }
 
     /**

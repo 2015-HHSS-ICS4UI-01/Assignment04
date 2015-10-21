@@ -50,7 +50,7 @@ public class GameBoard extends JComponent implements MouseListener {
             for (int y = 0; y < grid.length; y++) {
 
                 if ((x + y) % 2 == 0) {
-                    g.setColor(Color.DARK_GRAY);
+                    g.setColor(Color.LIGHT_GRAY);
                 } else {
                     g.setColor(Color.GRAY);
                 }
