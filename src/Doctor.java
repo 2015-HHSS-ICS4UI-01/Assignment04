@@ -10,21 +10,17 @@ import java.awt.Color;
  *
  * @author kobed6328
  */
-public class Dalek {
+public class Doctor{
     
     private int row = 0;
     private int col = 0;
-    private final Color color = Color.ORANGE;
     
-    public Dalek(int row, int col)
+    private final Color color = Color.GREEN;
+    
+    public Doctor(int row, int col)
     {
         this.row = row;
         this.col = col;
-    }
-    
-    public Color getColor()
-    {
-        return color;
     }
     
     public int getRow()
@@ -34,5 +30,10 @@ public class Dalek {
     public int getCol()
     {
         return col;
+    }
+    
+    public Color getColor()
+    {
+        return color;
     }
 }

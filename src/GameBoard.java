@@ -188,11 +188,10 @@ public class GameBoard extends JComponent implements MouseListener {
     public void mouseExited(MouseEvent e) {
         
     }
-    
     /**
      * @return width of the board
      */
-    public int getWidth()
+    public int getBoardWidth()
     {
         return BOARD_WIDTH;
     }
@@ -200,7 +199,7 @@ public class GameBoard extends JComponent implements MouseListener {
      * 
      * @return 
      */
-    public int getHeight()
+    public int getBoardHeight()
     {
         return BOARD_HEIGHT;
     }
