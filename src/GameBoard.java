@@ -2,6 +2,8 @@
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.JComponent;
@@ -12,18 +14,18 @@ import javax.swing.JFrame;
  * and open the template in the editor.
  */
 /**
- * A class that represents an 8x8 game board not unlike one used in checkers.
+ * A class that represents a game board not unlike one used in checkers.
  *
  * @author haidj9901
  */
-public class GameBoard extends JComponent implements MouseListener {
+public class GameBoard extends JComponent implements MouseListener, KeyListener{
 
     //initializing class variables
     private String message = "";
     private JFrame window;
-    private final int TILE_SIZE = 75; //side length of each tile
-    private final int BOARD_LENGTH = 8; //length of the board
-    private final int BOARD_WIDTH = 8; //width of the board
+    private final int TILE_SIZE = 66; //side length of each tile
+    private final int BOARD_LENGTH = 10; //length of the board
+    private final int BOARD_WIDTH = 10; //width of the board
     private Color[][] grid = new Color[BOARD_WIDTH][BOARD_LENGTH]; //2D array of colors based on board length and width
     public Coordinate click = null;
 
@@ -77,9 +79,18 @@ public class GameBoard extends JComponent implements MouseListener {
         
         //outputs any messages that are on the board
         g.setColor(Color.black);
-        g.drawString(message, TILE_SIZE / 2, TILE_SIZE * 8 + 3 * TILE_SIZE / 4);
+        g.drawString(message, TILE_SIZE / 2, TILE_SIZE * BOARD_LENGTH + 3 * TILE_SIZE / 4);
     }
 
+    public int getBoardLength()
+    {
+        return BOARD_LENGTH;
+    }
+
+    public int getBoardWidth()
+    {
+        return BOARD_WIDTH;
+    }
     /**
      * places a piece of a specific colour on the board
      *
@@ -127,24 +138,8 @@ public class GameBoard extends JComponent implements MouseListener {
         message = theMessage;
         repaint();
     }
-
-//    public void printBoard() {
-//        for (int x = 0; x < BOARD_WIDTH; x++) {
-//            for (int y = 0; y < BOARD_LENGTH; y++) {
-//                if (grid[y][x] == Color.red) {
-//                    System.out.print("R  ");
-//                } else if (grid[y][x] == Color.blue) {
-//                    System.out.print("B  ");
-//                } else if (grid[x][y] == null) {
-//                    System.out.print("_  ");
-//                }
-//            }
-//            System.out.println();
-//        }
-//        System.out.println(message);
-//        System.out.println();
-//    }
-
+    
+    
     /**
      * waits for and stores the coordinates of a mouse click
      * @return the Coordinate class with the x and y coordinates of the click
@@ -190,5 +185,17 @@ public class GameBoard extends JComponent implements MouseListener {
 
     @Override
     public void mouseExited(MouseEvent e) {
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
     }
 }

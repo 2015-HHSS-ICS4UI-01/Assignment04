@@ -28,11 +28,11 @@ public class Doctor {
     }
 
     /**
-     * Moves the doctor based on the given x and y coordiantes
+     * Moves the doctor based on the given x and y coordinates
      * @param newX the x-coordinate of where the mouse was clicked
      * @param newY the y-coordinate of where the mouse was clicked
      */
-    public void move(int newX, int newY) {
+    public void move(int newX, int newY, int boardWidth, int boardLength) {
         //if the given coordinates are within one tile of the Doctor
         if (Math.abs(newX - x) <= 1 && Math.abs(newY - y) <= 1) { 
             //swap old coordinates with the given coordinates
@@ -42,8 +42,8 @@ public class Doctor {
         else //if the given coordinates are not within one tile of the Doctor
         {
             //randomly assign a new position to the Doctor
-            x = (int)(Math.random()*8);
-            y = (int)(Math.random()*8);
+            x = (int)(Math.random()*boardWidth);
+            y = (int)(Math.random()*boardLength);
         }
     }
 
