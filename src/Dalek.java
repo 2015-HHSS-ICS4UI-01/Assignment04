@@ -56,14 +56,18 @@ public class Dalek {
      * @return 
      */
     public boolean hasCrashed(){
-        return false;
+        if(this.crashed){
+            return true;
+        }else{
+            return false;
+        }
     }
     
     /**
      * Sets two Daleks that have collided to crash.
      */
     public void crash(){
-        
+        crashed = true;
     }
     
 }
