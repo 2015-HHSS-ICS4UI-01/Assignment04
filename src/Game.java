@@ -19,7 +19,7 @@ public class Game {
         //initializing objects/variables
         GameBoard board = new GameBoard();
         Random rand = new Random();
-        Dalek[] dalek = new Dalek[3]; //three daleks on the gameboard
+        Dalek[] dalek = new Dalek[4]; //three daleks on the gameboard
         Doctor theDoctor = new Doctor(rand.nextInt(board.getBoardWidth()), rand.nextInt(board.getBoardLength())); //randomly generate starting position of the doctor 
         boolean gameOver = false; //boolean for whether a gameover event has occurred
 
@@ -27,15 +27,24 @@ public class Game {
         for (int x = 0; x < dalek.length; x++) {
             //choose a random position for the Dalek based on the width and length of the game board
             dalek[x] = new Dalek(rand.nextInt(board.getBoardWidth()), rand.nextInt(board.getBoardLength()));
-            //check if the dalek spawned in the same position as the Doctor
-            if (dalek[x].getX() == theDoctor.getX() && dalek[x].getY() == theDoctor.getY()) {
-                x--; //loop this dalek position to get a new position
-            } else {
-                //draw the dalek
-                board.putPiece(dalek[x].getX(), dalek[x].getY(), dalek[x].getColour());
-            }
+            //draw the dalek
+            board.putPiece(dalek[x].getX(), dalek[x].getY(), dalek[x].getColour());
+
         }
 
+        //checking for duplicate positions
+        for (int x = 0; x < dalek.length; x++) {
+            //check if any daleks occur at the same position
+            for (int y = x + 1; y < dalek.length; y++) {
+                if (dalek[x].getX() == dalek[y].getX() && dalek[x].getY() == dalek[y].getY()) {
+                    dalek[x] = new Dalek(rand.nextInt(board.getBoardWidth()), rand.nextInt(board.getBoardLength())); //generate new position
+                }
+            }
+            //check if any daleks occur on the doctor's position
+            if (dalek[x].getX() == theDoctor.getX() && dalek[x].getY() == theDoctor.getY()) {
+                dalek[x] = new Dalek(rand.nextInt(board.getBoardWidth()), rand.nextInt(board.getBoardLength())); //generate new position
+            }
+        }
         board.putPiece(theDoctor.getX(), theDoctor.getY(), Color.green); //draw the doctor
 
         while (!gameOver) { //while the game is not over
@@ -65,10 +74,12 @@ public class Game {
                         dalek[y].crash();
                     }
                 }
+                //draw the daleks onto the board
+                board.putPiece(dalek[x].getX(), dalek[x].getY(), dalek[x].getColour());
             }
 
             boolean allDaleksCrashed = true; //boolean that stores whether all the Daleks have crashed
-            for (int x = 0; x < dalek.length; x++) {
+            for (int x = 0; x < dalek.length; x++) { //loop through to check for capture and/or all daleks crashed
                 //if any Dalek is still alive
                 if (!dalek[x].hasCrashed()) {
                     allDaleksCrashed = false;
@@ -76,16 +87,16 @@ public class Game {
                 //check if the Doctor has been captured
                 if (dalek[x].getX() == theDoctor.getX() && dalek[x].getY() == theDoctor.getY()) {
                     theDoctor.captured(); //invoke capture method
-                    board.setMessage("The Doctor has been captured by Dalek " + (x + 1) + "!");
                 }
-
-                //draw the daleks onto the board
-                board.putPiece(dalek[x].getX(), dalek[x].getY(), dalek[x].getColour());
             }
 
             //check for a game over event
-            if (theDoctor.isCaptured() || allDaleksCrashed) {
+            if (theDoctor.isCaptured()) { //handles doctor capture
                 gameOver = true;
+                board.setMessage("The Doctor has been captured. Game over.");
+            } else if (allDaleksCrashed) { //handles all daleks crashed
+                gameOver = true;
+                board.setMessage("All Daleks have crashed. Game over.");
             }
         }
     }
