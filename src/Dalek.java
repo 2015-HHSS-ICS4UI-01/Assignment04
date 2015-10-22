@@ -24,7 +24,7 @@ public class Dalek {
     public Dalek(int startX, int startY) {
         x = startX;
         y = startY;
-        colour = Color.yellow;
+        colour = Color.black;
     }
 
     /**

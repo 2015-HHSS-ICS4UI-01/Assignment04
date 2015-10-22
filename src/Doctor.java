@@ -25,6 +25,7 @@ public class Doctor {
     public Doctor(int startX, int startY) {
         x = startX;
         y = startY;
+        colour = Color.GREEN;
     }
 
     /**
@@ -65,6 +66,10 @@ public class Doctor {
         return this.isCaptured;
     }
     
+    public Color getColour()
+    {
+        return colour;
+    }
     /**
      * Getter for the x-coordinate
      * @return x-coordinate
