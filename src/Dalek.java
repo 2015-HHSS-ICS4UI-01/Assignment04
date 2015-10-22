@@ -12,14 +12,17 @@ import java.awt.Color;
  */
 public class Dalek {
     
-    private int row = 0;
-    private int col = 0;
-    private final Color color = Color.ORANGE;
+    private final Color CRASH_COLOR = Color.RED;
+    private final Color ALIVE_COLOR = Color.ORANGE;
+    
+    private Coordinate coordinate;
+    private Color color;
+    private boolean crashed = false;
     
     public Dalek(Coordinate coordinate)
     {
-        this.row = coordinate.getRow();
-        this.col = coordinate.getCol();
+        this.coordinate = coordinate;
+        color = ALIVE_COLOR;
     }
     
     public Color getColor()
@@ -27,12 +30,27 @@ public class Dalek {
         return color;
     }
     
+    public void moveTo(Coordinate coordinate)
+    {
+        this.coordinate = coordinate;
+    }
+    
     public int getRow()
     {
-        return row;
+        return coordinate.getRow();
     }
     public int getCol()
     {
-        return col;
+        return coordinate.getCol();
+    }
+    
+    public boolean hasCrashed()
+    {
+        return crashed;
+    }
+    public void crash()
+    {
+        color = CRASH_COLOR;
+        crashed = true;
     }
 }

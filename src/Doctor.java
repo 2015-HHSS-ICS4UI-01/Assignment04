@@ -12,39 +12,47 @@ import java.awt.Color;
  */
 public class Doctor{
     
-    private int row = 0;
-    private int col = 0;
+    private final Color ALIVE_COLOR = Color.GREEN;
+    private final Color DEAD_COLOR = Color.BLUE;
     
-    private final Color color = Color.GREEN;
+    private Coordinate coordinate;
+    private boolean dead = false;
     
-    public Doctor(int row, int col)
+    private Color color;
+    
+    public Doctor(Coordinate coordinate)
     {
-        this.row = row;
-        this.col = col;
+        this.coordinate = coordinate;
+        color = ALIVE_COLOR;
     }
     
     public int getRow()
     {
-        return row;
+        return coordinate.getRow();
     }
     public int getCol()
     {
-        return col;
+        return coordinate.getCol();
     }
     
     public void moveTo(Coordinate coordinate)
     {
-        this.row = coordinate.getRow();
-        this.col = coordinate.getCol();
-    }
-    public void moveTo(int row, int col)
-    {
-        this.row = row;
-        this.col = col;
+        this.coordinate = coordinate;
     }
     
     public Color getColor()
     {
         return color;
+    }
+    
+    public void die()
+    {
+        color = DEAD_COLOR;
+        dead = true;
+    }
+    
+    public boolean isDead()
+    {
+        return dead;
     }
 }

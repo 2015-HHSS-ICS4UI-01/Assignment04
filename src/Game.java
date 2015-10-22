@@ -1,65 +1,145 @@
 
-import java.awt.Color;
-
-
 
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
 
+
 /**
- *
- * @author lamonta
+ * A Doctor Who style game, with the objective of controlling the Doctor to destroy all of the Daleks
+ * @author kobed6328
  */
 public class Game {
 
-    /**
-     * @param args the command line arguments
-     */
+    static GameBoard board = new GameBoard(8, 8);
+    
+    static int numDaleks = 3;
+    // array to store the daleks
+    static Dalek[] daleks;
+        
+    static Doctor doctor;
+    
     public static void main(String[] args) throws InterruptedException {
-        
-        GameBoard board = new GameBoard(8, 8);
-        
-        final int numDaleks = 3;
-        Dalek[] daleks = spawnDaleks(numDaleks, board);
-        addDaleks(daleks, board);
-        
-        Doctor doctor = spawnDoctor(daleks, board);
-        addDoctor(doctor, board);
+        // spawn the daleks and the doctor only at the beginning of the game
+        spawnDaleks();
+        spawnDoctor();
+        // draw the board once before the game loop starts
+        drawBoard();
         
         boolean gameon = true;
         while (gameon)
         {
+            // wait for the player to click the mouse
             Coordinate clickPoint = board.getClick();
-            if (withinWalkingRange(doctor, clickPoint))
+            // if the player clicks within one tile of the doctor, move the doctor to that tile
+            if (withinWalkingRange(clickPoint))
             {
-                moveDoctor(doctor, clickPoint, board);
+                moveDoctor(clickPoint);
             }
+            // otherwise, teleport the doctor to a random position on the board
             else
             {
-                teleportDoctor(doctor, board);
+                teleportDoctor();
             }
+            // after the doctor has moved, move all the daleks towards the doctor's new location
+            moveDaleks();
+            // stop the game once the doctor is dead or all of the daleks are crashed
+            if (doctor.isDead() || numDaleks <= 0)
+            {
+                gameon = false;
+            }
+            // draw the board at the end of each turn
+            drawBoard();
         }
     }
     
-    public static void addDoctor(Doctor doctor, GameBoard board)
-    {
-        board.putPiece(doctor.getRow(), doctor.getCol(), doctor.getColor());
-    }
-    public static void removeDoctor(Doctor doctor, GameBoard board)
-    {
-        board.removePiece(doctor.getRow(), doctor.getCol());
-    }
-    
-    public static void addDaleks(Dalek[] daleks, GameBoard board)
+    /**
+     * Draws the Daleks, the doctor, and a message onto the GameBoard
+     * 
+     */
+    public static void drawBoard()
     {
         for (Dalek dalek: daleks)
         {
             board.putPiece(dalek.getRow(), dalek.getCol(), dalek.getColor());
         }
+        board.putPiece(doctor.getRow(), doctor.getCol(), doctor.getColor());
+        
+        if (!doctor.isDead())
+        {
+            if (numDaleks > 0)
+            {
+                board.setMessage("Your Move");
+            }
+            else
+            {
+                board.setMessage("GAME OVER -- YOU WIN");
+            }
+        }
+        else
+        {
+            board.setMessage("GAME OVER -- YOU LOSE");
+        }
     }
-    public static void removeDaleks(Dalek[] daleks, GameBoard board)
+    
+    public static void moveDaleks()
+    {
+        removeDaleks();
+        
+        for (Dalek dalek: daleks)
+        {
+            if (!dalek.hasCrashed())
+            {
+                int horizontalDistance = Integer.signum(doctor.getRow() - dalek.getRow());
+                int verticalDistance = Integer.signum(doctor.getCol()- dalek.getCol());
+
+                int newRow = dalek.getRow() + horizontalDistance;
+                int newCol = dalek.getCol() + verticalDistance;
+
+                dalek.moveTo(new Coordinate(newRow, newCol));
+            }
+        }
+        crashDaleks();
+        crashWithDoctor();
+    }
+    
+    public static void crashDaleks()
+    {
+        for (int i = 0; i < daleks.length-1; i ++)
+        {
+            for (int j = i+1; j < daleks.length; j ++)
+            {
+                if (daleks[i].getRow() == daleks[j].getRow() && daleks[i].getCol() == daleks[j].getCol())
+                {
+                    daleks[i].crash();
+                    daleks[j].crash();
+                    numDaleks -= 2;
+                }
+            }
+        }
+    }
+    
+    public static void crashWithDoctor()
+    {
+        for (Dalek dalek: daleks)
+        {
+            if (dalek.getRow() == doctor.getRow() && dalek.getCol() == doctor.getCol())
+            {
+                numDaleks --;
+                doctor.die();
+            }
+        }
+    }
+    
+   // public static void collideDaleks()
+    
+    public static void removeDoctor()
+    {
+        board.removePiece(doctor.getRow(), doctor.getCol());
+    }
+    
+    public static void removeDaleks()
     {
         for (int i = 0; i < daleks.length; i ++)
         {
@@ -67,20 +147,14 @@ public class Game {
             board.removePiece(curDalek.getRow(), curDalek.getCol());
         }
     }
-    
-    public static Doctor spawnDoctor(Dalek[] daleks, GameBoard board)
+    public static void spawnDoctor()
     {
         
-        int row = 0;
-        int col = 0;
-        do
-        {
-            row = (int)(Math.random()*board.getBoardWidth());
-            col = (int)(Math.random()*board.getBoardHeight());
-        }while (!isValidSpawnLocation(daleks, row, col));
-        Doctor doctor = new Doctor(row, col);
-        
-        return doctor;
+        Coordinate randCoordinate = null;
+        do {
+            randCoordinate = genRandomCoordinate();
+        }while (!isValidSpawnLocation(daleks, randCoordinate));
+        doctor = new Doctor(randCoordinate);
     }
     
     /**
@@ -88,19 +162,18 @@ public class Game {
      * @param daleks the array to be populated with daleks
      * @param board the board to which the daleks should be added
      */
-    public static Dalek[] spawnDaleks(int numDaleks, GameBoard board)
+    public static void spawnDaleks()
     {
-        Dalek[] daleks = new Dalek[numDaleks];
+        daleks = new Dalek[numDaleks];
         // spawn each dalek in a random location
         for (int i = 0; i < numDaleks; i ++)
         {
             Coordinate randCoordinate = null;
             do {
-                randCoordinate = genRandomCoordinate(board);
+                randCoordinate = genRandomCoordinate();
             }while (!isValidSpawnLocation(daleks, i, randCoordinate));
             daleks[i] = new Dalek(randCoordinate);
         }
-        return daleks;
     }
     
     public static boolean isValidSpawnLocation(Dalek[] daleks, int lastDalekIndex, Coordinate coordinate)
@@ -114,11 +187,11 @@ public class Game {
         }
         return true;
     }
-    public static boolean isValidSpawnLocation(Dalek[] daleks, int row, int col)
+    public static boolean isValidSpawnLocation(Dalek[] daleks, Coordinate coordinate)
     {
         for (Dalek dalek: daleks)
         {
-            if (dalek.getRow() == row && dalek.getCol() == col)
+            if (dalek.getRow() == coordinate.getRow() && dalek.getCol() == coordinate.getCol())
             {
                 return false;
             }
@@ -126,7 +199,7 @@ public class Game {
         return true;
     }
     
-    public static boolean withinWalkingRange(Doctor doctor, Coordinate click)
+    public static boolean withinWalkingRange(Coordinate click)
     {
         int horizontalDistance = Math.abs(click.getRow() - doctor.getRow());
         int verticalDistance = Math.abs(click.getCol() - doctor.getCol());
@@ -134,19 +207,19 @@ public class Game {
         return horizontalDistance <= 1 && verticalDistance <= 1;
     }
     
-    public static void moveDoctor(Doctor doctor, Coordinate click, GameBoard board)
+    public static void moveDoctor(Coordinate click)
     {
-        removeDoctor(doctor, board);
+        removeDoctor();
         doctor.moveTo(click);
-        addDoctor(doctor, board);
     }
     
-    public static void teleportDoctor(Doctor doctor, GameBoard board)
+    public static void teleportDoctor()
     {
-        removeDoctor(doctor, board);
+        Coordinate randCoordinate = genRandomCoordinate();
+        moveDoctor(randCoordinate);
     }
     
-    public static Coordinate genRandomCoordinate(GameBoard board)
+    public static Coordinate genRandomCoordinate()
     {
         int row = (int)(Math.random()*board.getBoardWidth());
         int col = (int)(Math.random()*board.getBoardHeight());
