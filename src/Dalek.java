@@ -23,11 +23,11 @@ public class Dalek {
     public void advanceTowards(Doctor paul){
         if(paul.getRow() > row){
             row = row + 1;
-        }else if(paul.getRow() < row){
+        }if(paul.getRow() < row){
             row = row - 1; 
         }if(paul.getCol() > col){
             col = col + 1; 
-        }else if(paul.getCol() < col)
+        }if(paul.getCol() < col)
             col = col - 1;  
     }
     

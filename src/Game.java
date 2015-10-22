@@ -53,11 +53,13 @@ public class Game {
             paulCol = paul.getCol();
             board.putPiece(paulRow, paulCol, Color.lightGray);
             
+            board.removePiece(d1.getRow(), d1.getCol());
+            board.removePiece(d2.getRow(), d2.getCol());
+            board.removePiece(d3.getRow(), d3.getCol());
             
             
             
             if(d1.hasCrashed() == false){
-            board.removePiece(d1.getRow(), d1.getCol());
             d1.advanceTowards(paul);
             d1Row = d1.getRow();
             d1Col = d1.getCol();
@@ -66,8 +68,8 @@ public class Game {
             
             
             
+            
             if(d2.hasCrashed() == false){
-            board.removePiece(d2.getRow(), d2.getCol());
             d2.advanceTowards(paul);
             d2Row = d2.getRow();
             d2Col = d2.getCol();
@@ -76,8 +78,8 @@ public class Game {
             
             
             
+            
             if(d3.hasCrashed() == false){
-            board.removePiece(d3.getRow(), d3.getCol());
             d3.advanceTowards(paul);
             d3Row = d3.getRow();
             d3Col = d3.getCol();
@@ -85,12 +87,14 @@ public class Game {
             }
             
             
+            
+            
             if((d1Row == d2Row) && (d1Col == d2Col) && (d1Row == d3Row) && (d1Col == d3Col) ){
                  d1.crash();
                  d2.crash();
                  d3.crash();
                  board.putPiece(d1Row, d1Col, Color.red);
-            }
+            }else{
             
             if((d1Row == d2Row) && (d1Col == d2Col)){
                  d1.crash();
@@ -107,7 +111,7 @@ public class Game {
                  d3.crash();
                  board.putPiece(d1Row, d1Col, Color.red);
             }
-            
+            }
             
         }
 
