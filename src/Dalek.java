@@ -16,6 +16,7 @@ public class Dalek {
     public Dalek(int startRow, int startCol){
       row = startRow;
       col = startCol;  
+      hasCrashed = false;
     }
     
     
@@ -25,20 +26,18 @@ public class Dalek {
         }else if(paul.getRow() < row){
             row = row - 1; 
         }if(paul.getCol() > col){
-            row = row + 1; 
+            col = col + 1; 
         }else if(paul.getCol() < col)
-           col = col - 1;  
+            col = col - 1;  
     }
     
     public void crash(){
-  
-        
+        hasCrashed = true;
     } 
     
-//    public boolean hasCrashed(){
-//       
-//        
-//    }
+    public boolean hasCrashed(){
+       return hasCrashed;
+    }
     
     
     
