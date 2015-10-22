@@ -18,11 +18,10 @@ public class Game {
     public static void main(String[] args) {
 
         Random random = new Random();
-        Dalek[] daleks = new Dalek[3];
         boolean GameOver = false;
-        Doctor doctor = new Doctor(random.nextInt(8), random.nextInt(8));
+        Doctor doctor = new Doctor(random.nextInt(12), random.nextInt(12));
+        Dalek[] daleks = new Dalek[142];
         correctSpawnDalek(daleks, random, doctor);
-//        correctSpawnDoctor(daleks, random);
         GameBoard board = new GameBoard();
 
         while (!GameOver) {
@@ -59,7 +58,7 @@ public class Game {
 
     public static void dalekHasCrashed(Dalek[] daleks) {
         for (int x = 0; x < daleks.length - 1; x++) {
-            for (int y = 1; y + x < daleks.length; y++) {
+            for (int y = x + 1; y < daleks.length; y++) {
                 if (daleks[x].getX() == daleks[y].getX() && daleks[x].getY() == daleks[y].getY()) {
                     daleks[x].crash();
                     daleks[y].crash();
@@ -69,30 +68,18 @@ public class Game {
 
     }
 
-    public static void spawnDalek(Dalek[] daleks, Random random) {
-        for (int x = 0; x < daleks.length; x++) {
-            daleks[x] = new Dalek(random.nextInt(8), random.nextInt(8));
-        }
-    }
-
     public static void correctSpawnDalek(Dalek[] daleks, Random random, Doctor doctor) {
-        spawnDalek(daleks, random);
-        for (int x = 0; x < daleks.length-1; x++) {
-            for (int y = 1; y + x < daleks.length; y++) {
-                if ((daleks[x].getX() == daleks[y].getX() && daleks[x].getY() == daleks[y].getY()) || (daleks[x].getX() == doctor.getX() && daleks[x].getY() == doctor.getY())) {
-                    spawnDalek(daleks, random);
+        for (int y = 0; y < daleks.length; y++) {
+            daleks[y] = new Dalek(random.nextInt(12), random.nextInt(12));
+            for (int x = 1; x < daleks.length; x++) {
+                if (y - x >= 0) {
+                    while ((daleks[y].getX() == daleks[y - x].getX() && daleks[y].getY() == daleks[y - x].getY()) || (daleks[y].getX() == doctor.getX() && daleks[y].getY() == doctor.getY())) {
+                        daleks[y] = new Dalek(random.nextInt(12), random.nextInt(12));
+                    }
                 }
             }
-        }
 
-    }
 
-    public static void correctSpawnDoctor(Dalek[] daleks, Random random) {
-        Doctor doctor = new Doctor(random.nextInt(8), random.nextInt(8));
-        int x = 0;
-        while (doctor.getX() == daleks[x].getX() && doctor.getY() == daleks[x].getY() && x < daleks.length) {
-            doctor = new Doctor(random.nextInt(8), random.nextInt(8));
-            x++;
         }
     }
 }
