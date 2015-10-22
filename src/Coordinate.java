@@ -6,7 +6,7 @@
 /**
  * A Coordinate on the Game Board
  * 
- * @author lamonta
+ * @author donet6376
  */
 public class Coordinate {
     
@@ -32,8 +32,8 @@ public class Coordinate {
     }
     
     /**
-     * The getter for the Col
-     * @return the col of the coordinate
+     * The getter for the column
+     * @return the column of the coordinate
      */
     public int getCol(){
         return this.col;
