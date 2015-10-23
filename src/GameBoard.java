@@ -61,9 +61,9 @@ public class GameBoard extends JComponent implements MouseListener {
             for (int col = 0; col < 8; col++) {
                 // alternate the colours of the grid
                 if ((row + col) % 2 == 0) {
-                    g.setColor(Color.WHITE);
+                    g.setColor(Color.YELLOW);
                 } else {
-                    g.setColor(Color.BLACK);
+                    g.setColor(Color.CYAN);
                 }
                 // draws a single grid spot
                 g.fillRect(col * TILE_SIZE + TILE_SIZE / 4, row * TILE_SIZE + TILE_SIZE / 4, TILE_SIZE, TILE_SIZE);
@@ -86,6 +86,18 @@ public class GameBoard extends JComponent implements MouseListener {
      * @param colour the colour to make the piece
      */
     public void putPiece(int row, int col, Color colour) {
+        grid[row][col] = colour;
+        repaint();
+    }
+    
+     /**
+     * Place the player piece on the board
+     *
+     * @param row the row at which to place the piece
+     * @param col the column at which to place the piece
+     * @param colour the colour to make the piece
+     */
+    public void putPlayer(int row, int col, Color colour) {
         grid[row][col] = colour;
         repaint();
     }
