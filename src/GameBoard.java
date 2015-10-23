@@ -164,21 +164,18 @@ public class GameBoard extends JComponent implements MouseListener {
 
     @Override
     public void mousePressed(MouseEvent e) {
-        // get x and y of click
-        // shift them so the top and left boarders are gone
-        int x = e.getX() - TILE_SIZE/4;
-        int y = e.getY() - TILE_SIZE/4;
+        //get x and y of click
+        //shift them so the top and left boarders are gone
+        int mx = e.getX() - TILE_SIZE/4;
+        int my = e.getY() - TILE_SIZE/4;
         
-        // get the row and column of the click
-        int row = y / TILE_SIZE;
-        int col = x / TILE_SIZE;
+        //get the row and column of the click
+        int x = my / TILE_SIZE;
+        int y = mx /TILE_SIZE;
         
-        // validate the coordinate
-        if(row >= 0 && row <= 7 
-                && col >= 0 && col <= 7){
-            click = new Coordinate(row,col);
+        if(x >= 0 && x <= 7 && y >= 0 && y <= 7){
+            click = new Coordinate(x,y);
         }
-        
     }
 
     @Override

@@ -10,17 +10,17 @@
  */
 public class Coordinate {
     
-    private int row;
-    private int col;
+    private int x;
+    private int y;
     
     /**
      * Constructor for a new Coordinate
      * @param row the row of the coordinate
      * @param col the column of the coordinate
      */
-    public Coordinate(int row, int col){
-        this.row = row;
-        this.col = col;
+    public Coordinate(int x, int y){
+        this.x = x;
+        this.y = y;
     }
     
     /**
@@ -28,7 +28,7 @@ public class Coordinate {
      * @return the row of the coordinate
      */
     public int getRow(){
-        return this.row;
+        return this.x;
     }
     
     /**
@@ -36,7 +36,7 @@ public class Coordinate {
      * @return the col of the coordinate
      */
     public int getCol(){
-        return this.col;
+        return this.y;
     }
    
 }
