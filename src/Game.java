@@ -54,19 +54,28 @@ public class Game {
             player.move(row, col);
             
             
+             row = player.getRow();
+            col = player.getCol();
             
             board.putPiece(row, col, Color.BLUE);
             
-            row = player.getRow();
-            col = player.getCol();
+           
 
             board.removePiece(enemy1.getRow(), enemy1.getCol());
             board.removePiece(enemy2.getRow(), enemy2.getCol());
             board.removePiece(enemy3.getRow(), enemy3.getCol());
-
+            
+            if(enemy1.hasCrashed()){
             enemy1.advanceTowards(player);
+            }
+            
+            if(enemy2.hasCrashed()){
             enemy2.advanceTowards(player);
+            }
+            
+            if(enemy3.hasCrashed()){
             enemy3.advanceTowards(player);
+            }
 
             board.putPiece(enemy1.getRow(), enemy1.getCol(), Color.RED);
             board.putPiece(enemy2.getRow(), enemy2.getCol(), Color.RED);
