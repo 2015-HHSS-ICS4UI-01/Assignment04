@@ -32,13 +32,13 @@ public class Doctor {
     public void move(int firstRow, int firstCol){
         
         if((firstRow == row || firstRow == row - 1 || firstRow == row + 1) && 
-                (firstCol == row || firstCol == row - 1 || firstCol == row + 1) ){
+                (firstCol == col || firstCol == col - 1 || firstCol == col + 1) ){
             row = firstRow;
             col = firstCol;
         }else{
             
-            row = (int)(Math.random()*8);
-            col = (int)(Math.random()*8);
+            row = (int)(Math.random()*20);
+            col = (int)(Math.random()*20);
             
         }
         
