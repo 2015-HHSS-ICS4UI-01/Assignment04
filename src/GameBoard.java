@@ -23,9 +23,9 @@ public class GameBoard extends JComponent implements MouseListener, KeyListener{
     //initializing class variables
     private String message = "";
     private JFrame window;
+    private final int BOARD_LENGTH = 12; //length of the board
+    private final int BOARD_WIDTH = 12; //width of the board
     private final int TILE_SIZE = 50; //side length of each tile
-    private final int BOARD_LENGTH = 10; //length of the board
-    private final int BOARD_WIDTH = 10; //width of the board
     private Color[][] grid = new Color[BOARD_WIDTH][BOARD_LENGTH]; //2D array of colors based on board length and width
     public Coordinate click = null;
 
