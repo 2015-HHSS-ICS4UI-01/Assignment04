@@ -29,14 +29,14 @@ public class Dalek {
      */
     public void advanceTowards(Doctor doc){
         if(doc.getRow() > this.getRow()){
-            this.theRow = theRow + 100;
+            this.theRow = theRow + 1;
         }else if(doc.getRow() < this.getRow()){
-            this.theRow = theRow - 100;
+            this.theRow = theRow - 1;
         }
         if(doc.getCol() > this.getCol()){
-            this.theCol = theCol + 100;
+            this.theCol = theCol + 1;
         }else if(doc.getCol() < this.getCol()){
-            this.theCol = theCol - 100;
+            this.theCol = theCol - 1;
         }
     }
     

@@ -28,9 +28,22 @@ public class Doctor {
      * @param newCol the Doctor's new column.
      */
     public void move(int newRow, int newCol){
-        if(newRow <= this.theRow){
-            
+        
+        if(newRow == this.theRow + 1 || newRow == this.theRow - 1){
+            this.theRow = newRow;
         }
+        if(newCol == this.theCol + 1 || newCol == this.theCol - 1){
+            this.theCol = newCol;
+        }
+        
+        if(newRow == this.theRow && newCol == this.theCol){
+            
+        }else{ //(newRow > this.theRow + 1 || newRow < this.theRow - 1 || newCol > this.theCol + 1
+                //|| newCol < this.theCol - 1)
+            this.theRow = (int)(Math.random()*8);
+            this.theCol = (int)(Math.random()*8);
+        }
+        
     }
     
     /**
