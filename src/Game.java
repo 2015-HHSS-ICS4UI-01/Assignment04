@@ -1,5 +1,7 @@
 
 
+
+
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
@@ -12,15 +14,17 @@
  */
 public class Game {
 
-    static GameBoard board = new GameBoard(8, 8);
+    static GameBoard board = new GameBoard(70, 70);
     
-    static int numDaleks = 3;
+    static int numMoves = 0;
+    static int numDaleks = 60;
     // array to store the daleks
     static Dalek[] daleks;
-        
+    
     static Doctor doctor;
     
     public static void main(String[] args) throws InterruptedException {
+        
         // spawn the daleks and the doctor only at the beginning of the game
         spawnDaleks();
         spawnDoctor();
@@ -50,6 +54,7 @@ public class Game {
                 gameon = false;
             }
             // draw the board at the end of each turn
+            numMoves ++;
             drawBoard();
         }
     }
@@ -66,31 +71,40 @@ public class Game {
         }
         board.putPiece(doctor.getRow(), doctor.getCol(), doctor.getColor());
         
+        // prompts the user to move while they are alive and there are daleks on the board. 
+        // if no more daleks, YOU WIN
+        // otherwise, YOU LOSE
         if (!doctor.isDead())
         {
             if (numDaleks > 0)
             {
-                board.setMessage("Your Move");
+                board.setMessage("Your Move " + numMoves);
             }
             else
             {
-                board.setMessage("GAME OVER -- YOU WIN");
+                board.setMessage("GAME OVER -- YOU WIN " + numMoves);
             }
         }
         else
         {
-            board.setMessage("GAME OVER -- YOU LOSE");
+            board.setMessage("GAME OVER -- YOU LOSE " + numMoves);
         }
     }
     
+    /**
+     * Moves the Daleks towards the Doctor
+     */
     public static void moveDaleks()
     {
+        // remove the Daleks from their old position so they aren't duplicated
         removeDaleks();
         
         for (Dalek dalek: daleks)
         {
+            // only move the Daleks that haven't crashed
             if (!dalek.hasCrashed())
             {
+                // get the corresponding direction unit value
                 int horizontalDistance = Integer.signum(doctor.getRow() - dalek.getRow());
                 int verticalDistance = Integer.signum(doctor.getCol()- dalek.getCol());
 
@@ -100,21 +114,28 @@ public class Game {
                 dalek.moveTo(new Coordinate(newRow, newCol));
             }
         }
+        // crash any daleks that are on the same grid spot
         crashDaleks();
+        // kill the doctor if he is on the same gridspace as any daleks
         crashWithDoctor();
     }
     
+    /**
+     * Crashes any Daleks that are on the same grid spot
+     */
     public static void crashDaleks()
     {
         for (int i = 0; i < daleks.length-1; i ++)
         {
-            for (int j = i+1; j < daleks.length; j ++)
+            if (!daleks[i].hasCrashed())
             {
-                if (daleks[i].getRow() == daleks[j].getRow() && daleks[i].getCol() == daleks[j].getCol())
+                for (int j = i+1; j < daleks.length; j ++)
                 {
-                    daleks[i].crash();
-                    daleks[j].crash();
-                    numDaleks -= 2;
+                    if (daleks[i].getRow() == daleks[j].getRow() && daleks[i].getCol() == daleks[j].getCol())
+                    {
+                        daleks[i].crash();
+                        daleks[j].crash();
+                    }
                 }
             }
         }

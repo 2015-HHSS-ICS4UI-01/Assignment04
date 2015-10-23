@@ -23,7 +23,7 @@ public class GameBoard extends JComponent implements MouseListener {
     private Color[][] grid = null;
     private String message = "";
     private JFrame window;
-    private final int TILE_SIZE = 100;
+    private final int TILE_SIZE;
     private Coordinate click = null;
 
     /**
@@ -34,6 +34,8 @@ public class GameBoard extends JComponent implements MouseListener {
         // set board width and height
         BOARD_WIDTH = width;
         BOARD_HEIGHT = height;
+        
+        TILE_SIZE = 800/BOARD_WIDTH;
         
         // initialize the grid
         grid = new Color[BOARD_WIDTH][BOARD_HEIGHT];
@@ -71,9 +73,9 @@ public class GameBoard extends JComponent implements MouseListener {
             for (int col = 0; col < BOARD_HEIGHT; col++) {
                 // alternate the colours of the grid
                 if ((row + col) % 2 == 0) {
-                    g.setColor(Color.DARK_GRAY);
-                } else {
                     g.setColor(Color.GRAY);
+                } else {
+                    g.setColor(Color.LIGHT_GRAY);
                 }
                 // draws a single grid spot
                 g.fillRect(col * TILE_SIZE + TILE_SIZE / 4, row * TILE_SIZE + TILE_SIZE / 4, TILE_SIZE, TILE_SIZE);

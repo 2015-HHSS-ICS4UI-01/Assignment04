@@ -13,7 +13,7 @@ import java.awt.Color;
 public class Dalek {
     
     private final Color CRASH_COLOR = Color.RED;
-    private final Color ALIVE_COLOR = Color.ORANGE;
+    private final Color ALIVE_COLOR = Color.BLACK;
     
     private Coordinate coordinate;
     private Color color;

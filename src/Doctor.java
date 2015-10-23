@@ -13,7 +13,7 @@ import java.awt.Color;
 public class Doctor{
     
     private final Color ALIVE_COLOR = Color.GREEN;
-    private final Color DEAD_COLOR = Color.BLUE;
+    private final Color DEAD_COLOR = Color.YELLOW;
     
     private Coordinate coordinate;
     private boolean dead = false;
