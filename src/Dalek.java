@@ -33,6 +33,11 @@ public class Dalek {
         }else if(doc.getRow() < this.getRow()){
             this.theRow = theRow - 100;
         }
+        if(doc.getCol() > this.getCol()){
+            this.theCol = theCol + 100;
+        }else if(doc.getCol() < this.getCol()){
+            this.theCol = theCol - 100;
+        }
     }
     
     /**

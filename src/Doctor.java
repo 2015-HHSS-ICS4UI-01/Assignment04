@@ -28,7 +28,9 @@ public class Doctor {
      * @param newCol the Doctor's new column.
      */
     public void move(int newRow, int newCol){
-        
+        if(newRow <= this.theRow){
+            
+        }
     }
     
     /**
