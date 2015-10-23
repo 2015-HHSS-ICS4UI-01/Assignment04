@@ -69,13 +69,32 @@ public class GameBoard extends JComponent implements MouseListener {
                 g.fillRect(col * TILE_SIZE + TILE_SIZE / 4, row * TILE_SIZE + TILE_SIZE / 4, TILE_SIZE, TILE_SIZE);
                 // draw a piece
                 if (grid[row][col] != null) {
+                    if (grid[row][col] == Color.BLUE) {
+                        paintDoc(g,row,col);
+                    } else if (grid[row][col] == Color.PINK) {
+                        paintAliveDalek(g);
+                    } else if (grid[row][col] == Color.RED){
+                        paintDeadDalek(g);
+                    }
+                    
                     g.setColor(grid[row][col]);
-                    g.fillOval(col * TILE_SIZE + TILE_SIZE / 2, row * TILE_SIZE + TILE_SIZE / 2, TILE_SIZE / 2, TILE_SIZE / 2);
+                    g.fillRect(col * TILE_SIZE + TILE_SIZE / 2, row * TILE_SIZE + TILE_SIZE / 4, TILE_SIZE / 2, TILE_SIZE / 1);
+                    g.fillRect(col * TILE_SIZE + TILE_SIZE / 2, row * TILE_SIZE + TILE_SIZE / 4, TILE_SIZE / 2, TILE_SIZE / 1);
                 }
             }
         }
         g.setColor(Color.BLACK);
-        g.drawString(message, TILE_SIZE/4, TILE_SIZE*8 + TILE_SIZE/2);
+        g.drawString(message, TILE_SIZE / 4, TILE_SIZE * 8 + TILE_SIZE / 2);
+    }
+
+    public void paintDoc(Graphics g, int row, int col) {
+        g.setColor(Color.WHITE);
+        g.fillRect(col * TILE_SIZE + TILE_SIZE / 2, row * TILE_SIZE + TILE_SIZE / 4, TILE_SIZE / 2, TILE_SIZE / 1);
+    }
+    
+    public void paintAliveDalek(Graphics g) {
+    }
+    public void paintDeadDalek(Graphics g) {
     }
 
     /**
@@ -141,58 +160,54 @@ public class GameBoard extends JComponent implements MouseListener {
         System.out.println("");
     }
 
-    public Coordinate getClick(){
+    public Coordinate getClick() {
         // wipe out the previous click
         click = null;
         // wait for a click to happen
-        while(click == null){
+        while (click == null) {
             // do nothing
             // wait for click to happen
-            try{
+            try {
                 Thread.sleep(1);
-            }catch(Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
         return click;
     }
-    
+
     @Override
     public void mouseClicked(MouseEvent e) {
-        
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
         // get x and y of click
         // shift them so the top and left boarders are gone
-        int x = e.getX() - TILE_SIZE/4;
-        int y = e.getY() - TILE_SIZE/4;
-        
+        int x = e.getX() - TILE_SIZE / 4;
+        int y = e.getY() - TILE_SIZE / 4;
+
         // get the row and column of the click
         int row = y / TILE_SIZE;
         int col = x / TILE_SIZE;
-        
+
         // validate the coordinate
-        if(row >= 0 && row <= 7 
-                && col >= 0 && col <= 7){
-            click = new Coordinate(row,col);
+        if (row >= 0 && row <= 7
+                && col >= 0 && col <= 7) {
+            click = new Coordinate(row, col);
         }
-        
+
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        
     }
 
     @Override
     public void mouseEntered(MouseEvent e) {
-        
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
-        
     }
 }

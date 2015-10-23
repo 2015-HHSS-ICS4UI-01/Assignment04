@@ -17,18 +17,19 @@ public class Game {
     public static void main(String[] args) {
         GameBoard board = new GameBoard();
 
+        //herr Doktor
         Doctor who = new Doctor(3, 5);
 
+        //EVIL EVIL EVIL EEEEEEEEEEEEEEEE
+        Dalek[] enemies = {new Dalek(7, 4), new Dalek(5, 0), new Dalek(7, 7)};
 
-        Dalek[] enemies = {new Dalek(7, 4), new Dalek(1, 0), new Dalek(6, 7)};
-
-        //doctor stuff
+        //doKtor stuff
         int dRow = who.getX();
         int dCol = who.getY();
-        board.putPiece(dRow, dCol, Color.GREEN);
+        board.putPiece(dRow, dCol, Color.BLUE);
+
 
         //Dalek 1 stuff
-
         board.putPiece(enemies[0].getRow(), enemies[0].getCol(), Color.PINK);
 
         //Dalek 2 stuff
@@ -37,19 +38,31 @@ public class Game {
         //Dalek 3 stuff
         board.putPiece(enemies[2].getRow(), enemies[2].getCol(), Color.PINK);
 
-        int win
-        while (true) {
+        //ending variables
+        boolean win = false;
+        boolean lose = false;
+
+
+        //main game loop
+        while (!win && !lose) {
 
             //doctor movement
+            //
+            //wher they clicked
             Coordinate p = board.getClick();
+
+            //take the piece off the board
             board.removePiece(dRow, dCol);
 
+            //hold onto the origional co-oridinates
             int holdx = dRow;
             int holdy = dCol;
 
+            //get the click's co-ordinates
             dRow = p.getRow();
             dCol = p.getCol();
 
+            //if the click was more than one space away, randomize the co-ordinates
             if (holdx + 1 < dRow || holdx - 1 > dRow) {
                 dRow = (int) (Math.random() * 8);
                 dCol = (int) (Math.random() * 8);
@@ -58,16 +71,21 @@ public class Game {
                 dRow = (int) (Math.random() * 8);
                 dCol = (int) (Math.random() * 8);
             }
-            who = new Doctor(dRow, dCol);
-            board.putPiece(dRow, dCol, Color.GREEN);
 
+            //put the doctor at his new co-ordinates
+            who = new Doctor(dRow, dCol);
+            board.putPiece(dRow, dCol, Color.BLUE);
             //
-            
+
+
             //Dalek movement
+            //
+            //get all the Daleks off the board
             board.removePiece(enemies[0].getRow(), enemies[0].getCol());
             board.removePiece(enemies[1].getRow(), enemies[1].getCol());
             board.removePiece(enemies[2].getRow(), enemies[2].getCol());
 
+            //if they haven't crashed yet they move
             if (!enemies[0].hasCrashed()) {
                 enemies[0].advanceTowards(who);
             }
@@ -77,45 +95,61 @@ public class Game {
             if (!enemies[2].hasCrashed()) {
                 enemies[2].advanceTowards(who);
             }
-            board.putPiece(enemies[0].getRow(), enemies[0].getCol(), Color.PINK);
-            board.putPiece(enemies[1].getRow(), enemies[1].getCol(), Color.PINK);
-            board.putPiece(enemies[2].getRow(), enemies[2].getCol(), Color.PINK);
-            
+
+            //check if they crashed
+            if (enemies[0].getRow() == enemies[1].getRow() && enemies[0].getCol() == enemies[1].getCol()) {
+                enemies[0].crash();
+                enemies[1].crash();
+            } else if (enemies[0].getRow() == enemies[2].getRow() && enemies[0].getCol() == enemies[2].getCol()) {
+                enemies[0].crash();
+                enemies[2].crash();
+            } else if (enemies[1].getRow() == enemies[2].getRow() && enemies[1].getCol() == enemies[2].getCol()) {
+                enemies[1].crash();
+                enemies[2].crash();
+            }
+
+            //put them back on the board if they havent crashed, if they have make em red
+            //ENEMY 1
+            if (!enemies[0].hasCrashed()) {
+                board.putPiece(enemies[0].getRow(), enemies[0].getCol(), Color.PINK);
+            } else {
+                board.putPiece(enemies[0].getRow(), enemies[0].getCol(), Color.RED);
+            }
+
+            //ENEMY 2
+            if (!enemies[1].hasCrashed()) {
+                board.putPiece(enemies[1].getRow(), enemies[1].getCol(), Color.PINK);
+            } else {
+                board.putPiece(enemies[1].getRow(), enemies[1].getCol(), Color.RED);
+            }
+
+            //ENEMY 3
+            if (!enemies[2].hasCrashed()) {
+                board.putPiece(enemies[2].getRow(), enemies[2].getCol(), Color.PINK);
+            } else {
+                board.putPiece(enemies[2].getRow(), enemies[2].getCol(), Color.RED);
+            }
             //
-            
-            //check for crash
-//            if (enemies[0].getRow() == enemies[1].getRow() && enemies[0].getCol() == enemies[1].getCol()) {
-//                enemies[0].crash();
-//                enemies[1].crash();
-//            } else if (enemies[0].getRow() == enemies[2].getRow() && enemies[0].getCol() == enemies[2].getCol()) {
-//                enemies[0].crash();
-//                enemies[2].crash();
-//            } else if (enemies[1].getRow() == enemies[2].getRow() && enemies[1].getCol() == enemies[2].getCol()) {
-//                enemies[1].crash();
-//                enemies[2].crash();
-//            }
-            //for Daleks
-            for(int i = 0; i < enemies.length; i++){
-                for(int j = 1; j < enemies.length; j++){
-                    if (enemies[i].getRow() == enemies[j].getRow() && enemies[i].getCol() == enemies[j].getCol()){
-                        
-                    }
-                
+
+            //ending statements
+            //
+            if (enemies[0].hasCrashed() && enemies[1].hasCrashed() && enemies[2].hasCrashed()) {
+                win = true;
+            }
+            for (int i = 0; i + 1 < enemies.length; i++) {
+                if (who.getX() == enemies[i].getRow() && who.getY() == enemies[i].getCol()) {
+                    lose = true;
                 }
-            }
-            
-            
-            
-            if (enemies[0].hasCrashed() && enemies[1].hasCrashed() && enemies[2].hasCrashed()){
-                break;
-            }
-            if (){
-                break;
             }
             //
 
         }
-        board.setMessage("GAME OVER");
+        //checking how the player ended the game
+        if (lose) {
+            board.setMessage("GAME OVER");
+        } else {
+            board.setMessage("WINNER WINNER CHICKEN DINNER!!!");
+        }
 
     }
 }
