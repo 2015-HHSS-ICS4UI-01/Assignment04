@@ -33,7 +33,6 @@ public class Game {
         
         boolean checkStart = false;
         boolean inProgress = true;
-        boolean moved = false;
         
         while(inProgress){
             //perform checks of positions of doctor/enemies at start up
@@ -97,15 +96,13 @@ public class Game {
                 }
                 
                 checkStart = true;
+                
             }
+        
             
-            if(!moved){
-
-                
-            }else if(moved){
-                
-            }
             
         }
+            
     }
 }
+
