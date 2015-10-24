@@ -14,9 +14,9 @@
  */
 public class Game {
 
-    static GameBoard board = new GameBoard(50, 50);
+    static GameBoard board = new GameBoard(30, 30);
     
-    static int aliveDaleks = 100;
+    static int aliveDaleks = 30;
     // array to store the daleks
     static Dalek[] daleks;
     
@@ -52,7 +52,6 @@ public class Game {
             {
                 gameon = false;
             }
-            System.out.println(aliveDaleks);
             // draw the board at the end of each turn
             drawBoard();
         }
