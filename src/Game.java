@@ -123,27 +123,28 @@ public class Game {
      */
     public static void crashDaleks()
     {
-        // for every single dalek, check every single dalek ahead of it in the list whether or not these two have crashed   
-        for (int i = 0; i < daleks.length-1; i ++)
+        // for every single dalek, if it has not crashed, check every single dalek but itself for a collision
+        for (int i = 0; i < daleks.length; i ++)
         {
             if (!daleks[i].hasCrashed())
             {
-                for (int j = i+1; j < daleks.length; j ++)
+                for (int j = 0; j < daleks.length; j ++)
                 {
-                    // if the two daleks intersect on the grid
-                    if (daleks[i].getRow() == daleks[j].getRow() && daleks[i].getCol() == daleks[j].getCol())
+                    // don't check itself
+                    if (j != i)
                     {
-                        // if the checked dalek has not yet crashed, crash it
-                        // decrease the number of alive daleks
-                        if (!daleks[i].hasCrashed())
+                        // if the two daleks intersect on the grid
+                        if (daleks[i].getRow() == daleks[j].getRow() && daleks[i].getCol() == daleks[j].getCol())
                         {
+                            // crash the daleks and decrease alive daleks accordingly
                             daleks[i].crash();
                             aliveDaleks --;
-                        }
-                        if (!daleks[j].hasCrashed())
-                        {
-                            daleks[j].crash();
-                            aliveDaleks --;
+                            // only crash the second dalek if it is still alive
+                            if (!daleks[j].hasCrashed())
+                            {
+                                daleks[j].crash();
+                                aliveDaleks --;
+                            }
                         }
                     }
                 }
