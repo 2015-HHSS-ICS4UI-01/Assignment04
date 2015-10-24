@@ -28,6 +28,8 @@ public class GameBoard extends JComponent implements MouseListener {
 
     /**
      * Creates a brand new empty 8x8 Board
+     * @param width the tile count for the width of the board
+     * @param height the tile count for the height of the board
      */
     public GameBoard(int width, int height) {
         
@@ -86,6 +88,7 @@ public class GameBoard extends JComponent implements MouseListener {
                 }
             }
         }
+        // Draws the current message to the board
         g.setColor(Color.BLACK);
         g.drawString(message, TILE_SIZE/4, TILE_SIZE*BOARD_WIDTH + TILE_SIZE/2);
     }
@@ -103,7 +106,7 @@ public class GameBoard extends JComponent implements MouseListener {
     }
 
     /**
-     * Removes a piece that is on the board
+     * Clears a tile on the board
      *
      * @param row the row to remove the piece from
      * @param col the column to remove the piece from
@@ -191,6 +194,7 @@ public class GameBoard extends JComponent implements MouseListener {
         
     }
     /**
+     * Getter for the board width
      * @return width of the board
      */
     public int getBoardWidth()
@@ -198,8 +202,8 @@ public class GameBoard extends JComponent implements MouseListener {
         return BOARD_WIDTH;
     }
     /**
-     * 
-     * @return 
+     * Getter for the board height
+     * @return height of the board
      */
     public int getBoardHeight()
     {
