@@ -14,10 +14,9 @@
  */
 public class Game {
 
-    static GameBoard board = new GameBoard(70, 70);
+    static GameBoard board = new GameBoard(8, 8);
     
-    static int numMoves = 0;
-    static int numDaleks = 60;
+    static int numDaleks = 3;
     // array to store the daleks
     static Dalek[] daleks;
     
@@ -54,7 +53,6 @@ public class Game {
                 gameon = false;
             }
             // draw the board at the end of each turn
-            numMoves ++;
             drawBoard();
         }
     }
@@ -78,16 +76,16 @@ public class Game {
         {
             if (numDaleks > 0)
             {
-                board.setMessage("Your Move " + numMoves);
+                board.setMessage("Your Move ");
             }
             else
             {
-                board.setMessage("GAME OVER -- YOU WIN " + numMoves);
+                board.setMessage("GAME OVER -- YOU WIN ");
             }
         }
         else
         {
-            board.setMessage("GAME OVER -- YOU LOSE " + numMoves);
+            board.setMessage("GAME OVER -- YOU LOSE ");
         }
     }
     
@@ -125,41 +123,63 @@ public class Game {
      */
     public static void crashDaleks()
     {
+        // for every single dalek, check every single dalek ahead of it in the list whether or not these two have crashed   
         for (int i = 0; i < daleks.length-1; i ++)
         {
             if (!daleks[i].hasCrashed())
             {
                 for (int j = i+1; j < daleks.length; j ++)
                 {
+                    // if the two daleks intersect on the grid
                     if (daleks[i].getRow() == daleks[j].getRow() && daleks[i].getCol() == daleks[j].getCol())
                     {
-                        daleks[i].crash();
-                        daleks[j].crash();
+                        // if the checked dalek has not yet crashed, crash it
+                        if (!daleks[i].hasCrashed())
+                        {
+                            daleks[i].crash();
+                            numDaleks --;
+                        }
+                        if (!daleks[j].hasCrashed())
+                        {
+                            daleks[j].crash();
+                            numDaleks --;
+                        }
                     }
                 }
             }
         }
     }
-    
+    /**
+     * Kills the doctor if it is on the same grid spot as any Dalek
+     */
     public static void crashWithDoctor()
     {
+        // check each dalek if it intersects with the doctor
         for (Dalek dalek: daleks)
         {
+            // if the doctor and the dalek share the same grispot
             if (dalek.getRow() == doctor.getRow() && dalek.getCol() == doctor.getCol())
             {
-                numDaleks --;
+                // make sure the dalek has not yet crashed
+                if (!dalek.hasCrashed())
+                {
+                    numDaleks --;
+                }
+                // the doctor should die regardless of whether or not the Dalek is crashed
                 doctor.die();
             }
         }
     }
-    
-   // public static void collideDaleks()
-    
+    /**
+     * Removes the doctor from the gameboard
+     */
     public static void removeDoctor()
     {
         board.removePiece(doctor.getRow(), doctor.getCol());
     }
-    
+    /**
+     * Removes the Daleks from the gameboard
+     */
     public static void removeDaleks()
     {
         for (int i = 0; i < daleks.length; i ++)
@@ -168,37 +188,46 @@ public class Game {
             board.removePiece(curDalek.getRow(), curDalek.getCol());
         }
     }
+    /**
+     * Spawns the doctor at a random location on the board
+     */
     public static void spawnDoctor()
     {
-        
+        // generate a random coordinate while that coordinate is shared by any Dalek
         Coordinate randCoordinate = null;
         do {
             randCoordinate = genRandomCoordinate();
-        }while (!isValidSpawnLocation(daleks, randCoordinate));
+        }while (!isValidSpawnLocation(randCoordinate));
         doctor = new Doctor(randCoordinate);
     }
     
     /**
-     * Adds all the daleks to the daleks array, at a random row and col
-     * @param daleks the array to be populated with daleks
-     * @param board the board to which the daleks should be added
+     * Spawns the daleks at random lactions on the board
      */
     public static void spawnDaleks()
     {
         daleks = new Dalek[numDaleks];
-        // spawn each dalek in a random location
+        // populate the dalek array
         for (int i = 0; i < numDaleks; i ++)
         {
+            // generate a random coordinate while that coordinate is shared by any other dalek
             Coordinate randCoordinate = null;
             do {
                 randCoordinate = genRandomCoordinate();
-            }while (!isValidSpawnLocation(daleks, i, randCoordinate));
+            }while (!isValidSpawnLocation(i, randCoordinate));
             daleks[i] = new Dalek(randCoordinate);
         }
     }
-    
-    public static boolean isValidSpawnLocation(Dalek[] daleks, int lastDalekIndex, Coordinate coordinate)
+    /**
+     * Checks whether a spawn coordinate is shared by any Dalek
+     * @param lastDalekIndex the index of the Dalek at which to stop checking (this is used to avoid checking non-spawned Daleks)
+     * @param coordinate the coordinate to be checked
+     * @return false if the coordinate is shared with any other Dalek; otherwise, return true
+     */
+    public static boolean isValidSpawnLocation(int lastDalekIndex, Coordinate coordinate)
     {
+        // iterate through the dalek array and check for intersections
+        // stop once a the non-initialized Dalek index is reached
         for (int i = 0; i < lastDalekIndex; i++)
         {
             if (daleks[i].getRow() == coordinate.getRow() && daleks[i].getCol() == coordinate.getCol())
@@ -208,8 +237,14 @@ public class Game {
         }
         return true;
     }
-    public static boolean isValidSpawnLocation(Dalek[] daleks, Coordinate coordinate)
+    /**
+     * Checks whether a spawn coordinate is shared by any Dalek
+     * @param coordinate the coordinate to be checked
+     * @return false if the coordinate is shared with any other Dalek; otherwise, return true
+     */
+    public static boolean isValidSpawnLocation(Coordinate coordinate)
     {
+        // iterate through all the daleks and check for an intersection
         for (Dalek dalek: daleks)
         {
             if (dalek.getRow() == coordinate.getRow() && dalek.getCol() == coordinate.getCol())
@@ -219,29 +254,44 @@ public class Game {
         }
         return true;
     }
-    
+    /**
+     * Checks whether or not a mouse click is within 1 grid space of the Doctor
+     * @param click the coordinate of the mouse click
+     * @return true if the mouse click is within one tile of the Doctor; otherwise, return false
+     */
     public static boolean withinWalkingRange(Coordinate click)
     {
+        // get the absolute horizontal and vertical distances between the mouse click and the Doctor's coordinates
         int horizontalDistance = Math.abs(click.getRow() - doctor.getRow());
         int verticalDistance = Math.abs(click.getCol() - doctor.getCol());
         
         return horizontalDistance <= 1 && verticalDistance <= 1;
     }
-    
+    /**
+     * Moves the doctor to the specified mouse click
+     * @param click the coordinate of the mouse click
+     */
     public static void moveDoctor(Coordinate click)
     {
+        // remove the doctor from the board before moving him
         removeDoctor();
         doctor.moveTo(click);
     }
-    
+    /**
+     * Teleports the Doctor to a random location on the board
+     */
     public static void teleportDoctor()
     {
         Coordinate randCoordinate = genRandomCoordinate();
         moveDoctor(randCoordinate);
     }
-    
+    /**
+     * Generates a random coordinate
+     * @return the random coordinate object
+     */
     public static Coordinate genRandomCoordinate()
     {
+        // generate a random row and column within the constraints of the board
         int row = (int)(Math.random()*board.getBoardWidth());
         int col = (int)(Math.random()*board.getBoardHeight());
         return new Coordinate(row, col);
