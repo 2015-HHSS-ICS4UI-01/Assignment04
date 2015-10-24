@@ -15,20 +15,26 @@ public class Dalek {
     // colors of the dalek in its dead and alive states
     private final Color CRASH_COLOR = Color.RED;
     private final Color ALIVE_COLOR = Color.BLACK;
+    // the Daleks' current doctor
     private Color color;
-    
+    // the Dalek's current coordinates
     private Coordinate coordinate;
+    // the Daleks'c crashed state
     private boolean crashed = false;
     
+    /**
+     * Sets the Dalek's coordinates and color
+     * @param coordinate the Dalek's initial coordinates
+     */
     public Dalek(Coordinate coordinate)
     {
         this.coordinate = coordinate;
-        // dalek should start as alive
+        // Dalek should start as alive
         color = ALIVE_COLOR;
     }
     /**
      * Returns the current color of the Dalek
-     * @return 
+     * @return the Dalek's current color
      */
     public Color getColor()
     {
@@ -40,11 +46,12 @@ public class Dalek {
      */
     public void moveTo(Coordinate coordinate)
     {
+        // replace the current coordinates with new ones
         this.coordinate = coordinate;
     }
     /**
      * Gives the Dalek's current row number
-     * @return row
+     * @return the coordinate's row
      */
     public int getRow()
     {
@@ -52,7 +59,7 @@ public class Dalek {
     }
     /**
      * Gives the Dalek's current column number
-     * @return col
+     * @return the coordinate's column
      */
     public int getCol()
     {
