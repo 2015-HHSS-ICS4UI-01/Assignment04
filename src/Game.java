@@ -16,7 +16,7 @@ public class Game {
 
     static GameBoard board = new GameBoard(8, 8);
     
-    static int numDaleks = 3;
+    static int aliveDaleks = 3;
     // array to store the daleks
     static Dalek[] daleks;
     
@@ -48,7 +48,7 @@ public class Game {
             // after the doctor has moved, move all the daleks towards the doctor's new location
             moveDaleks();
             // stop the game once the doctor is dead or all of the daleks are crashed
-            if (doctor.isDead() || numDaleks <= 0)
+            if (doctor.isDead() || aliveDaleks <= 0)
             {
                 gameon = false;
             }
@@ -74,7 +74,7 @@ public class Game {
         // otherwise, YOU LOSE
         if (!doctor.isDead())
         {
-            if (numDaleks > 0)
+            if (aliveDaleks > 0)
             {
                 board.setMessage("Your Move ");
             }
@@ -134,15 +134,16 @@ public class Game {
                     if (daleks[i].getRow() == daleks[j].getRow() && daleks[i].getCol() == daleks[j].getCol())
                     {
                         // if the checked dalek has not yet crashed, crash it
+                        // decrease the number of alive daleks
                         if (!daleks[i].hasCrashed())
                         {
                             daleks[i].crash();
-                            numDaleks --;
+                            aliveDaleks --;
                         }
                         if (!daleks[j].hasCrashed())
                         {
                             daleks[j].crash();
-                            numDaleks --;
+                            aliveDaleks --;
                         }
                     }
                 }
@@ -163,7 +164,7 @@ public class Game {
                 // make sure the dalek has not yet crashed
                 if (!dalek.hasCrashed())
                 {
-                    numDaleks --;
+                    aliveDaleks --;
                 }
                 // the doctor should die regardless of whether or not the Dalek is crashed
                 doctor.die();
@@ -206,9 +207,9 @@ public class Game {
      */
     public static void spawnDaleks()
     {
-        daleks = new Dalek[numDaleks];
+        daleks = new Dalek[aliveDaleks];
         // populate the dalek array
-        for (int i = 0; i < numDaleks; i ++)
+        for (int i = 0; i < aliveDaleks; i ++)
         {
             // generate a random coordinate while that coordinate is shared by any other dalek
             Coordinate randCoordinate = null;
