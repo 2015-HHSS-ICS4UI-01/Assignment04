@@ -9,9 +9,9 @@
  * @author lamonta
  */
 public class Coordinate {
-    
-    private int row;
-    private int col;
+    // the row and column indexes
+    private final int row;
+    private final int col;
     
     /**
      * Constructor for a new Coordinate
