@@ -14,9 +14,9 @@
  */
 public class Game {
 
-    static GameBoard board = new GameBoard(8, 8);
+    static GameBoard board = new GameBoard(50, 50);
     
-    static int aliveDaleks = 3;
+    static int aliveDaleks = 100;
     // array to store the daleks
     static Dalek[] daleks;
     
@@ -52,6 +52,7 @@ public class Game {
             {
                 gameon = false;
             }
+            System.out.println(aliveDaleks);
             // draw the board at the end of each turn
             drawBoard();
         }
@@ -145,6 +146,8 @@ public class Game {
                                 daleks[j].crash();
                                 aliveDaleks --;
                             }
+                            // don't check this dalek anymore since it's now dead... simply continue loop
+                            break;
                         }
                     }
                 }
@@ -162,12 +165,7 @@ public class Game {
             // if the doctor and the dalek share the same grispot
             if (dalek.getRow() == doctor.getRow() && dalek.getCol() == doctor.getCol())
             {
-                // make sure the dalek has not yet crashed
-                if (!dalek.hasCrashed())
-                {
-                    aliveDaleks --;
-                }
-                // the doctor should die regardless of whether or not the Dalek is crashed
+                // kill the doctor
                 doctor.die();
             }
         }
