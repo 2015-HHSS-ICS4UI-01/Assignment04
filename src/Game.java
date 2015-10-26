@@ -94,6 +94,8 @@ public class Game {
                     board.removePiece(doctor.getRow(), doctor.getCol());
                     board.removePiece(dalek3.getRow(), dalek3.getCol());
                     board.putPiece(doctor.getRow(), doctor.getCol(), Color.YELLOW);
+                }if(dalek1.hasCrashed() && dalek2.hasCrashed() && dalek3.hasCrashed()){
+                    inProgress = false;
                 }
                 
                 startCheck = false;
@@ -101,13 +103,15 @@ public class Game {
              
             while(!moved && inProgress && !startCheck){
 
-                  board.getClick();
-                  
+                  Coordinate c = board.getClick();
+                  int row = c.getRow();
+                  int col = c.getCol();
                   board.removePiece(doctor.getRow(), doctor.getCol());
+                  doctor.move(row,col);
                   board.putPiece(doctor.getRow(), doctor.getCol(), Color.GREEN);
                 
-             //   startCheck = true;
-             //   moved = true;
+                startCheck = true;
+                moved = true;
             }
             
             while(moved && inProgress && !startCheck){
@@ -137,6 +141,9 @@ public class Game {
                 }else if(dalek3.hasCrashed()){
                     board.putPiece(dalek3.getRow(), dalek3.getCol(), Color.RED);
                 }
+                
+                moved = false;
+                startCheck = true;
             }
   
         }
