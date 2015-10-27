@@ -34,6 +34,7 @@ public class Game {
         boolean moved = false;
         boolean inProgress = true;
         boolean startCheck = true;
+        boolean won = true;
         
         while(inProgress){
             //perform checks of positions of doctor/enemies at start up
@@ -78,6 +79,8 @@ public class Game {
                     board.removePiece(doctor.getRow(), doctor.getCol());
                     board.removePiece(dalek1.getRow(), dalek1.getCol());
                     board.putPiece(doctor.getRow(), doctor.getCol(), Color.YELLOW);
+                    
+                    won = false;
 
                 }if(doctor.getRow() == dalek2.getRow() && doctor.getCol() == dalek2.getCol()){
                     inProgress = false;
@@ -86,6 +89,8 @@ public class Game {
                     board.removePiece(doctor.getRow(), doctor.getCol());
                     board.removePiece(dalek2.getRow(), dalek2.getCol());
                     board.putPiece(doctor.getRow(), doctor.getCol(), Color.YELLOW);
+                    
+                    won = false;
 
                 }if(doctor.getRow() == dalek3.getRow() && doctor.getCol() == dalek3.getCol()){
                     inProgress = false;
@@ -94,7 +99,12 @@ public class Game {
                     board.removePiece(doctor.getRow(), doctor.getCol());
                     board.removePiece(dalek3.getRow(), dalek3.getCol());
                     board.putPiece(doctor.getRow(), doctor.getCol(), Color.YELLOW);
-                }if(dalek1.hasCrashed() && dalek2.hasCrashed() && dalek3.hasCrashed()){
+                    
+                    won = false;
+                    
+                }//if all daleks have crashed
+                //the game ends
+                if(dalek1.hasCrashed() && dalek2.hasCrashed() && dalek3.hasCrashed() && won){
                     inProgress = false;
                 }
                 
@@ -102,13 +112,18 @@ public class Game {
             }
              
             while(!moved && inProgress && !startCheck){
-
-                  Coordinate c = board.getClick();
-                  int row = c.getRow();
-                  int col = c.getCol();
-                  board.removePiece(doctor.getRow(), doctor.getCol());
-                  doctor.move(row,col);
-                  board.putPiece(doctor.getRow(), doctor.getCol(), Color.GREEN);
+    
+                //tell the user what to do
+                board.setMessage("Click yourself to wait, click any of the 8 squares"
+                        + " around you to move there, and click anywhere else to randomly teleport.");
+                
+                //when click is found, move the doctor.
+                Coordinate c = board.getClick();
+                int row = c.getRow();
+                int col = c.getCol();
+                board.removePiece(doctor.getRow(), doctor.getCol());
+                doctor.move(row,col);
+                board.putPiece(doctor.getRow(), doctor.getCol(), Color.GREEN);
                 
                 startCheck = true;
                 moved = true;
@@ -147,7 +162,13 @@ public class Game {
             }
   
         }
-            
+         
+        if(!won){
+            board.setMessage("GAME OVER: You were captured.");
+        }else if(won){
+            board.setMessage("All Daleks have been defeated. You Win!");
+        }
+        
     }
 }
 
