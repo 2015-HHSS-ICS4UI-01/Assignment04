@@ -16,7 +16,7 @@ public class Game {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        boolean notPlaced = true;
+        boolean running = true;
         GameBoard board = new GameBoard();
         Random rand = new Random();
         int row = rand.nextInt(8);
@@ -44,7 +44,15 @@ public class Game {
         Dalek enemy3 = new Dalek(row3, col3);
         board.putPiece(row3, col3, Color.RED);
 
-        while (true) {
+        while (running) {
+            
+            if (player.getRow() == enemy1.getRow() && player.getCol() == enemy1.getCol() || 
+                    player.getRow() == enemy2.getRow() && player.getCol() == enemy2.getCol()
+                    || player.getRow() == enemy3.getRow() && player.getCol() == enemy3.getCol()) {
+                running = false;
+                board.putPiece(player.getRow(), player.getCol(), Color.GRAY);
+                board.setMessage("You have been Captured.");
+            }else{
 
             Coordinate cords = board.getClick();
             board.removePiece(row, col);
@@ -58,41 +66,44 @@ public class Game {
             col = player.getCol();
             
             board.putPiece(row, col, Color.BLUE);
+            }
             
-           
-
+            
+            if(!enemy1.hasCrashed()){
             board.removePiece(enemy1.getRow(), enemy1.getCol());
-            board.removePiece(enemy2.getRow(), enemy2.getCol());
-            board.removePiece(enemy3.getRow(), enemy3.getCol());
-            
-            if(enemy1.hasCrashed()){
             enemy1.advanceTowards(player);
+            board.putPiece(enemy1.getRow(), enemy1.getCol(), Color.RED);
             }
             
-            if(enemy2.hasCrashed()){
+            if(!enemy2.hasCrashed()){
+            board.removePiece(enemy2.getRow(), enemy2.getCol());
             enemy2.advanceTowards(player);
+            board.putPiece(enemy2.getRow(), enemy2.getCol(), Color.RED);
             }
             
-            if(enemy3.hasCrashed()){
+            if(!enemy3.hasCrashed()){
+            board.removePiece(enemy3.getRow(), enemy3.getCol());
             enemy3.advanceTowards(player);
+            board.putPiece(enemy3.getRow(), enemy3.getCol(), Color.RED);
             }
 
-            board.putPiece(enemy1.getRow(), enemy1.getCol(), Color.RED);
-            board.putPiece(enemy2.getRow(), enemy2.getCol(), Color.RED);
-            board.putPiece(enemy3.getRow(), enemy3.getCol(), Color.RED);
-            
+      
             if (enemy1.getRow() == enemy2.getRow() && enemy1.getCol() == enemy2.getCol()) {
                 board.removePiece(enemy1.getRow(), enemy1.getCol());
                 board.removePiece(enemy2.getRow(), enemy2.getCol());
                 
                 board.putPiece(enemy2.getRow(), enemy2.getCol(), Color.GRAY);
+                enemy1.crash();
+                enemy2.crash();
             }
             
-            if (enemy1.getRow() == enemy3.getRow() && enemy3.getCol() == enemy2.getCol()) {
+            if (enemy1.getRow() == enemy3.getRow() && enemy3.getCol() == enemy1.getCol()) {
                 board.removePiece(enemy1.getRow(), enemy1.getCol());
                 board.removePiece(enemy3.getRow(), enemy3.getCol());
                 
                 board.putPiece(enemy3.getRow(), enemy3.getCol(), Color.GRAY);
+                enemy1.crash();
+                enemy3.crash();
             }
             
             if (enemy2.getRow() == enemy3.getRow() && enemy2.getCol() == enemy3.getCol()) {
@@ -100,6 +111,8 @@ public class Game {
                 board.removePiece(enemy2.getRow(), enemy2.getCol());
                 
                 board.putPiece(enemy2.getRow(), enemy2.getCol(), Color.GRAY);
+                enemy3.crash();
+                enemy2.crash();
             }
 
         }

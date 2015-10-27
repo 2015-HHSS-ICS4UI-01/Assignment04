@@ -90,17 +90,6 @@ public class GameBoard extends JComponent implements MouseListener {
         repaint();
     }
     
-     /**
-     * Place the player piece on the board
-     *
-     * @param row the row at which to place the piece
-     * @param col the column at which to place the piece
-     * @param colour the colour to make the piece
-     */
-    public void putPlayer(int row, int col, Color colour) {
-        grid[row][col] = colour;
-        repaint();
-    }
 
     /**
      * Removes a piece that is on the board
@@ -113,18 +102,6 @@ public class GameBoard extends JComponent implements MouseListener {
         repaint();
     }
 
-    /**
-     * Removes all piece from the board
-     */
-    public void clearBoard() {
-        // sets all positions to be null
-        for (int row = 0; row < 8; row++) {
-            for (int col = 0; col < 8; col++) {
-                grid[row][col] = null;
-            }
-        }
-        repaint();
-    }
 
     /**
      * Displays a message on the game area
@@ -134,23 +111,6 @@ public class GameBoard extends JComponent implements MouseListener {
     public void setMessage(String theMessage) {
         message = theMessage;
         repaint();
-    }
-
-    public void printBoard() {
-        for (int row = 0; row < 8; row++) {
-            for (int col = 0; col < 8; col++) {
-                if (grid[row][col] == Color.RED) {
-                    System.out.print("R  ");
-                } else if (grid[row][col] == Color.BLUE) {
-                    System.out.print("B  ");
-                } else if (grid[row][col] == null) {
-                    System.out.print("_  ");
-                }
-            }
-            System.out.println("");
-        }
-        System.out.println(message);
-        System.out.println("");
     }
 
     public Coordinate getClick(){

@@ -22,9 +22,12 @@ public class Doctor {
 
     public void move(int row, int col) {
         Random rand = new Random();
-        if (row >= this.row + 2 || row <= this.row - 2 ||col >= this.col + 2 || col <= this.col - 2) {
-            col = rand.nextInt(8);
-            row = rand.nextInt(8);
+        if (Math.abs(row - this.row) > 1 || Math.abs(col - this.col) > 1) {
+            this.col = rand.nextInt(8);
+            this.row = rand.nextInt(8);
+        }else{
+            this.row = row;
+            this.col = col;
         }
     }
 

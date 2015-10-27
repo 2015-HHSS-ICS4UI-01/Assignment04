@@ -34,8 +34,12 @@ public class Dalek {
         
     }
     
+    public void crash(){
+        hasCrashed = true;
+    }
+    
     public boolean hasCrashed(){
-       return hasCrashed = true;     
+       return hasCrashed;     
     }
     
     public int getRow(){
