@@ -88,13 +88,14 @@ public class GameBoard extends JComponent implements MouseListener {
     }
 
     public void paintDoc(Graphics g, int row, int col) {
-        g.setColor(Color.WHITE);
-        g.fillRect(col * TILE_SIZE + TILE_SIZE / 2, row * TILE_SIZE + TILE_SIZE / 4, TILE_SIZE / 2, TILE_SIZE / 1);
+        
     }
     
     public void paintAliveDalek(Graphics g) {
+        
     }
     public void paintDeadDalek(Graphics g) {
+        
     }
 
     /**
