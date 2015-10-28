@@ -58,7 +58,7 @@ public class Game {
                     board.removePiece(dalek3.getRow(), dalek3.getCol());
                     board.putPiece(dalek1.getRow(), dalek1.getCol(), Color.RED);
 
-                }if(dalek2.getRow() == dalek3.getRow() && dalek2.getRow() == dalek3.getCol()){
+                }if(dalek2.getRow() == dalek3.getRow() && dalek2.getCol() == dalek3.getCol()){
                     dalek2.crash();
                     dalek3.crash();
 
