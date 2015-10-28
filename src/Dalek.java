@@ -21,17 +21,15 @@ public class Dalek {
     public void advanceTowards(Doctor doc){
         if (row > doc.getRow()){
             row = row - 1;
-        }
-        if (row < doc.getRow()){
+        }else if (row < doc.getRow()){
             row = row + 1;
         }
-        if (col > doc.getCol()){
-            col = col - 1;
-        }
-        if (col < doc.getCol()){
-            col = col + 1;
-        }
         
+        if (this.col > doc.getCol()){
+            this.col = col - 1;
+        }else if (this.col < doc.getCol()){
+            this.col = col + 1;
+        }     
     }
     
     public void crash(){
