@@ -61,11 +61,7 @@ public class Dalek {
      * @return 
      */
     public boolean hasCrashed(){
-        if(this.crashed){
-            return true;
-        }else{
-            return false;
-        }
+        return crashed;
     }
     
     /**
