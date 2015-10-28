@@ -25,10 +25,10 @@ public class Dalek {
             row = row + 1;
         }
         
-        if (this.col > doc.getCol()){
-            this.col = col - 1;
-        }else if (this.col < doc.getCol()){
-            this.col = col + 1;
+        if (col > doc.getCol()){
+            col = col - 1;
+        }else if (col < doc.getCol()){
+            col = col + 1;
         }     
     }
     
