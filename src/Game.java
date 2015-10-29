@@ -17,11 +17,35 @@ public class Game {
     public static void main(String[] args) {
         GameBoard board = new GameBoard();
 
+        int[] ranNumx = new int[4];
+        
+        ranNumx[0] = (int) (Math.random() * 8);
+        for(int i = 1; i < ranNumx.length; i++){
+            ranNumx[i] = (int) (Math.random() * 8);
+            for(int j = 0; j < i; j++){
+                if(ranNumx[i] == ranNumx[j]){
+                    ranNumx[j]++;
+                }
+            }
+        }
+        
+        int[] ranNumy = new int[4];
+        
+        ranNumy[0] = (int) (Math.random() * 8);
+        for(int i = 1; i < ranNumy.length; i++){
+            ranNumy[i] = (int) (Math.random() * 8);
+            for(int j = 0; j < i; j++){
+                if(ranNumy[i] == ranNumy[j]){
+                    ranNumy[j]++;
+                }
+            }
+        }
+        
         //herr Doktor
-        Doctor who = new Doctor(3, 5);
+        Doctor who = new Doctor(ranNumx[0], ranNumy[0]);
 
         //EVIL EVIL EVIL EEEEEEEEEEEEEEEE
-        Dalek[] enemies = {new Dalek(7, 4), new Dalek(5, 0), new Dalek(7, 7)};
+        Dalek[] enemies = {new Dalek(ranNumx[1], ranNumy[1]), new Dalek(ranNumx[2], ranNumy[2]), new Dalek(ranNumx[3], ranNumy[3])};
 
         //doKtor stuff
         int dRow = who.getX();
@@ -138,6 +162,7 @@ public class Game {
             }
             for (int i = 0; i + 1 < enemies.length; i++) {
                 if (who.getX() == enemies[i].getRow() && who.getY() == enemies[i].getCol()) {
+                    board.putPiece(dRow, dCol, Color.YELLOW);
                     lose = true;
                 }
             }
