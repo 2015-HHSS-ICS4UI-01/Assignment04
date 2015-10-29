@@ -20,8 +20,8 @@ public class Game {
         Random random = new Random();
         boolean GameOver = false;
         Doctor doctor = new Doctor(random.nextInt(12), random.nextInt(12));
-        Dalek[] daleks = new Dalek[142];
-        correctSpawnDalek(daleks, random, doctor);
+        Dalek[] daleks = new Dalek[143];
+        correctlySpawnDaleks(daleks, random, doctor);
         GameBoard board = new GameBoard();
 
         while (!GameOver) {
@@ -48,6 +48,7 @@ public class Game {
                     d.advanceTowards(doctor);
                 }
                 if (d.getX() == doctor.getX() && d.getY() == doctor.getY()) {
+                    board.putPiece(doctor.getX(), doctor.getY(), Color.YELLOW);
                     board.setMessage("Game Over");
                     GameOver = true;
                 }
@@ -68,18 +69,22 @@ public class Game {
 
     }
 
-    public static void correctSpawnDalek(Dalek[] daleks, Random random, Doctor doctor) {
+    public static void correctlySpawnDaleks(Dalek[] daleks, Random random, Doctor doctor) {
+        boolean swapped = false;
         for (int y = 0; y < daleks.length; y++) {
             daleks[y] = new Dalek(random.nextInt(12), random.nextInt(12));
-            for (int x = 1; x < daleks.length; x++) {
-                if (y - x >= 0) {
-                    while ((daleks[y].getX() == daleks[y - x].getX() && daleks[y].getY() == daleks[y - x].getY()) || (daleks[y].getX() == doctor.getX() && daleks[y].getY() == doctor.getY())) {
-                        daleks[y] = new Dalek(random.nextInt(12), random.nextInt(12));
+            if (y > 0) {
+                do {
+                    swapped = false;
+                    for (int x = y - 1; x >= 0; x--) {
+                        if ((daleks[y].getX() == daleks[x].getX() && daleks[y].getY() == daleks[x].getY())
+                                || (daleks[y].getX() == doctor.getX() && daleks[y].getY() == doctor.getY())) {
+                            daleks[y] = new Dalek(random.nextInt(12), random.nextInt(12));
+                            swapped = true;
+                        }
                     }
-                }
+                } while (swapped);
             }
-
-
         }
     }
 }
