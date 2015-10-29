@@ -22,8 +22,7 @@ public class Game {
         Dalek d1 = new Dalek((int) (Math.random() * 8), (int) (Math.random() * 8));
         Dalek d2 = new Dalek((int) (Math.random() * 8), (int) (Math.random() * 8));
         Dalek d3 = new Dalek((int) (Math.random() * 8), (int) (Math.random() * 8));
-
-
+        
         int paulRow = paul.getRow();
         int paulCol = paul.getCol();
         board.putPiece(paulRow, paulCol, Color.lightGray);
@@ -39,6 +38,16 @@ public class Game {
         int d3Row = d3.getRow();
         int d3Col = d3.getCol();
         board.putPiece(d3Row, d3Col, Color.orange);
+        
+        while((paulRow == d1Row) && (paulCol == d1Col) || (paulRow == d2Row) && (paulCol == d2Col) || (paulRow == d3Row) && (paulCol == d3Col) ){
+                 board.removePiece(paul.getRow(), paul.getCol());
+                 paulRow = paul.getRow();
+                 paulCol = paul.getCol();
+                 board.putPiece((int) (Math.random() * 8),(int) (Math.random() * 8), Color.lightGray);  
+                 int ran = 0;
+                 ran ++;
+                 board.setMessage("the game ran" + ran);
+            }
 
         while (true) {
             
@@ -94,6 +103,7 @@ public class Game {
                  d2.crash();
                  d3.crash();
                  board.putPiece(d1Row, d1Col, Color.red);
+                 break;
             }else{
             
             if((d1Row == d2Row) && (d1Col == d2Col)){
@@ -110,10 +120,30 @@ public class Game {
                  d1.crash();
                  d3.crash();
                  board.putPiece(d1Row, d1Col, Color.red);
-            }
+                }
+
             }
             
+            if((d1Row == d2Row) && (d1Col == d2Col) && (d1Row == d3Row) && (d1Col == d3Col) ){
+                 break;
+            }else if((paulRow == d1Row) && (paulCol == d1Col) || (paulRow == d2Row) && (paulCol == d2Col) || (paulRow == d3Row) && (paulCol == d3Col) ){
+                 break;
+            } 
         }
 
+        if((paulRow == d1Row) && (paulCol == d1Col) || (paulRow == d2Row) && (paulCol == d2Col) || (paulRow == d3Row) && (paulCol == d3Col) ){
+                 int row = paul.getRow();
+                 int col = paul.getCol();
+                 board.putPiece(row,col,Color.red);
+                 board.setMessage("You lost... Try again.");
+            }else{
+                 int row = paul.getRow();
+                 int col = paul.getCol();
+                 board.putPiece(row,col,Color.green);
+                 board.setMessage("YOU WON!!!!");
+        }
+        
+        
+        
     }
 }
