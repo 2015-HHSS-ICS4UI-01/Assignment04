@@ -35,10 +35,10 @@ public class Game {
         Doctor nima = new Doctor(docRow, docCol);
                       
         //randomly spawns the daleks and the doctor
-        board.putPiece(nima.getRow(), nima.getCol() , Color.BLUE);
-        board.putPiece(one.getRow(), one.getCol(), Color.RED);
-        board.putPiece(dalRow2, dalCol2, Color.RED);
-        board.putPiece(dalRow3, dalCol3, Color.RED);
+        board.putPiece(nima.getRow(), nima.getCol() , Color.YELLOW);
+        board.putPiece(one.getRow(), one.getCol(), Color.BLUE);
+        board.putPiece(dalRow2, dalCol2, Color.BLUE);
+        board.putPiece(dalRow3, dalCol3, Color.BLUE);
         
         while(true){
         
@@ -53,16 +53,45 @@ public class Game {
         
         //moves the doctor
         nima.move(click.getRow(), click.getCol());
-        board.putPiece(nima.getRow(), nima.getCol() , Color.BLUE);
+        board.putPiece(nima.getRow(), nima.getCol() , Color.YELLOW);
         
         //moving the daleks
         one.advanceTowards(nima);
-        board.putPiece(one.getRow(), one.getCol() , Color.RED);
+        board.putPiece(one.getRow(), one.getCol() , Color.BLUE);
         two.advanceTowards(nima);
-        board.putPiece(two.getRow(), two.getCol() , Color.RED);
+        board.putPiece(two.getRow(), two.getCol() , Color.BLUE);
         three.advanceTowards(nima);
-        board.putPiece(three.getRow(), three.getCol() , Color.RED);
+        board.putPiece(three.getRow(), three.getCol() , Color.BLUE);
+        
+        //crashing the daleks
+        if(one.getRow() == two.getRow() && one.getCol() == two.getCol()){
+            //if they crashed then remove them
+            board.removePiece(one.getRow(), one.getCol());
+            board.removePiece(two.getRow(), two.getCol());
+            //add a new piece at the spot they crashed
+            board.putPiece(two.getRow(), two.getCol(), Color.RED);   
+            
         }
         
+        if(three.getRow() == two.getRow() && three.getCol() == two.getCol()){
+            //if they crashed then remove them
+            board.removePiece(three.getRow(), three.getCol());
+            board.removePiece(two.getRow(), two.getCol());
+            //add a new piece at the spot they crashed
+            board.putPiece(two.getRow(), two.getCol(), Color.RED);
+            
+            
+        }
+        
+        if(one.getRow() == three.getRow() && one.getCol() == three.getCol()){
+            //if they crashed then remove them
+            board.removePiece(one.getRow(), one.getCol());
+            board.removePiece(three.getRow(), three.getCol());
+            //add a new piece at the spot they crashed
+            board.putPiece(one.getRow(), one.getCol(), Color.RED);  
+            
+        }
+        
+        }        
     }
 }
