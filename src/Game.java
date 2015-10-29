@@ -48,13 +48,20 @@ public class Game {
                     d.advanceTowards(doctor);
                 }
                 if (d.getX() == doctor.getX() && d.getY() == doctor.getY()) {
-                    board.putPiece(doctor.getX(), doctor.getY(), Color.YELLOW);
                     board.setMessage("Game Over");
                     GameOver = true;
                 }
             }
             dalekHasCrashed(daleks);
         }
+        for (Dalek d : daleks) {
+            if (!d.hasCrashed()) {
+                board.putPiece(d.getX(), d.getY(), Color.BLACK);
+            } else {
+                board.putPiece(d.getX(), d.getY(), Color.RED);
+            }
+        }
+        board.putPiece(doctor.getX(), doctor.getY(), Color.YELLOW);
     }
 
     public static void dalekHasCrashed(Dalek[] daleks) {
