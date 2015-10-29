@@ -80,7 +80,7 @@ public class Game {
             } else {
 
                 Coordinate cords = board.getClick();
-                board.removePiece(row, col);
+                board.removePiece(player.getRow(), player.getCol());
                 row = cords.getRow();
                 col = cords.getCol();
 
