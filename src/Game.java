@@ -10,9 +10,9 @@
  */
 public class Game {
 
-    static GameBoard board = new GameBoard(30, 30);
+    static GameBoard board = new GameBoard(8, 8);
     
-    static int aliveDaleks = 30;
+    static int aliveDaleks = 3;
     // array to store the daleks
     static Dalek[] daleks;
     
