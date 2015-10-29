@@ -89,7 +89,7 @@ public class Game {
             
             board.putPiece(leo.getRow(),leo.getCol(), Color.GREEN);
             
-            board.setMessage("" + dalek.getRow() + dalek1.getRow() + dalek.getCol() + dalek1.getCol());
+           
             
             
             if((leo.getCol() == dalek.getCol()&&leo.getRow() == dalek.getRow())||(leo.getCol() == dalek1.getCol()&&leo.getRow() == dalek1.getRow())||(leo.getCol() == dalek2.getCol()&&leo.getRow() == dalek2.getRow())){
