@@ -17,42 +17,44 @@ public class Game {
      */
     public static void main(String[] args) {
 
-        Random random = new Random();
-        boolean GameOver = false;
-        Doctor doctor = new Doctor(random.nextInt(12), random.nextInt(12));
-        Dalek[] daleks = new Dalek[143];
-        correctlySpawnDaleks(daleks, random, doctor);
-        GameBoard board = new GameBoard();
+        Random random = new Random(); //used to randomly spawn objects
+        boolean GameOver = false; // indicates the progress of the game
 
-        while (!GameOver) {
+        Doctor doctor = new Doctor(random.nextInt(12), random.nextInt(12)); //spawn the doctor
+        Dalek[] daleks = new Dalek[3]; // initialize dalek array
+        correctlySpawnDaleks(daleks, random, doctor); // calls helper method to correctly spawn daleks
+        GameBoard board = new GameBoard(); //the game board
+
+        while (!GameOver) { //if game is still running 
+
             //place the piece for doctor
             board.putPiece(doctor.getX(), doctor.getY(), Color.GREEN);
             //place the pieces for daleks
             for (Dalek d : daleks) {
-                if (!d.hasCrashed()) {
+                if (!d.hasCrashed()) { // if the dalek hasn't crashed yet
                     board.putPiece(d.getX(), d.getY(), Color.BLACK);
-                } else {
+                } else { //if the dalek has crashed, turn the crash site red
                     board.putPiece(d.getX(), d.getY(), Color.RED);
                 }
             }
 
-            //move the doctor
+            //move the doctor by getting the coordinate of the user's click and moving according to game rules
             Coordinate c = board.getClick();
             board.removePiece(doctor.getX(), doctor.getY());
             doctor.move(c.getX(), c.getY());
 
-            //move the daleks
+            //move the daleks in accordance to the doctor's position
             for (Dalek d : daleks) {
-                if (!d.hasCrashed()) {
+                if (!d.hasCrashed()) {  // if they havent crashed, remove the piece and move its position towards doctor
                     board.removePiece(d.getX(), d.getY());
                     d.advanceTowards(doctor);
                 }
-                if (d.getX() == doctor.getX() && d.getY() == doctor.getY()) {
+                if (d.getX() == doctor.getX() && d.getY() == doctor.getY()) { // if the dalek catches the doctor
                     board.setMessage("Game Over");
-                    GameOver = true;
+                    GameOver = true; // end game
                 }
             }
-            dalekHasCrashed(daleks);
+            dalekHasCrashed(daleks); // check if the dalek's new positions cause them to be crashed, and if so, crash them
         }
         for (Dalek d : daleks) {
             if (!d.hasCrashed()) {

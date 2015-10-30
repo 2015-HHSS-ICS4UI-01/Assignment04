@@ -17,13 +17,13 @@ import javax.swing.JFrame;
  * @author branc2347
  */
 public class GameBoard extends JComponent implements MouseListener {
-    
+
     private Color[][] grid = new Color[12][12];
     private String message = "";
     private final int TILE_SIZE = 50;
     private JFrame window;
     private Coordinate click = null;
-    
+
     public GameBoard() {
         for (int x = 0; x < grid.length; x++) {
             for (int y = 0; y < grid.length; y++) {
@@ -36,26 +36,26 @@ public class GameBoard extends JComponent implements MouseListener {
         window.add(this);
         //make the frame visible
         window.setVisible(true);
-        window.setPreferredSize(new Dimension(grid.length * TILE_SIZE + 50, grid.length * TILE_SIZE + 50));
+        window.setPreferredSize(new Dimension(grid.length * TILE_SIZE + 50, grid.length * TILE_SIZE + 100));
         window.pack();
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         //add the mouse listener to the game board
         this.addMouseListener(this);
     }
-    
+
     @Override
     public void paintComponent(Graphics g) {
-        
+
         for (int x = 0; x < grid.length; x++) {
             for (int y = 0; y < grid.length; y++) {
-                
+
                 if ((x + y) % 2 == 0) {
                     g.setColor(Color.LIGHT_GRAY);
                 } else {
                     g.setColor(Color.GRAY);
                 }
                 g.fillRect(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
-                
+
                 if (grid[x][y] != null) {
                     g.setColor(grid[x][y]);
                     g.fillOval(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
@@ -64,7 +64,7 @@ public class GameBoard extends JComponent implements MouseListener {
         }
         g.setColor(Color.BLACK);
         g.drawString(message, 3, grid.length * TILE_SIZE + 25);
-        
+
     }
 
     /**
@@ -110,9 +110,9 @@ public class GameBoard extends JComponent implements MouseListener {
     public void setMessage(String message) {
         this.message = message;
     }
-    
+
     public Coordinate getClick() {
-        
+
         click = null;
         while (click == null) {
             //do nothing
@@ -124,11 +124,11 @@ public class GameBoard extends JComponent implements MouseListener {
         }
         return click;
     }
-    
+
     @Override
     public void mouseClicked(MouseEvent e) {
     }
-    
+
     @Override
     public void mousePressed(MouseEvent e) {
         int x = (e.getX()) / TILE_SIZE;
@@ -139,15 +139,15 @@ public class GameBoard extends JComponent implements MouseListener {
             click = new Coordinate(x, y);
         }
     }
-    
+
     @Override
     public void mouseReleased(MouseEvent e) {
     }
-    
+
     @Override
     public void mouseEntered(MouseEvent e) {
     }
-    
+
     @Override
     public void mouseExited(MouseEvent e) {
     }
