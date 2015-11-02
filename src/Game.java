@@ -13,7 +13,6 @@ import java.awt.Color;
 public class Game {
     
     
-    private boolean game;
     
     public static void main(String[] args) {
         
