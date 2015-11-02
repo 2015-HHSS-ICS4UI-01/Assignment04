@@ -29,31 +29,17 @@ public class Dalek {
         int docRow = doc.getRow();
         int docCol = doc.getCol();
         
-        if(hasCrashed == false){
-            
-            //finding where the doctor is
-            int docRow = doc.getRow();
-            int docCol = doc.getCol();
-        
-            if(row < docRow){
-                row = row + 1;
-            }else if(row > docRow){
-             row = row - 1;
-            }
-        
-            if(col < docCol){
-                col = col + 1;
-            }else if(col > docCol){
-                col = col - 1;
-            }
-        
-        }else if(hasCrashed == true){
-                
-            row = row;
-            col = col;
-            
+        if(row < docRow){
+            row = row + 1;
+        }else if(row > docRow){
+            row = row - 1;
         }
         
+        if(col < docCol){
+            col = col + 1;
+        }else if(col > docCol){
+            col = col - 1;
+        }
         
         }else{
             row = row;
@@ -61,6 +47,8 @@ public class Dalek {
         }
         
     }
+        
+    
     
     public void crash(){
         hasCrashed = true;

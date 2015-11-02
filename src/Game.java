@@ -13,6 +13,8 @@ import java.awt.Color;
 public class Game {
     
     
+    private boolean game;
+    
     public static void main(String[] args) {
         
         
@@ -44,8 +46,9 @@ public class Game {
         board.putPiece(dalRow2, dalCol2, Color.BLUE);
         board.putPiece(dalRow3, dalCol3, Color.BLUE);
         
+        boolean game = true;
         
-        while(true){
+        while(game){
         
         //makes the doctor move and do his thing
         Coordinate click = board.getClick();
@@ -100,6 +103,8 @@ public class Game {
             
             one.crash();
             three.crash();
+            
+            
         }        
         
         if((nima.getRow() == one.getRow() && nima.getCol() == one.getCol()) || (nima.getRow() == two.getRow() && nima.getCol() == two.getCol()) ||
@@ -115,6 +120,8 @@ public class Game {
                 
                 one.crash();
                 
+                game = false;
+                
             }else if(nima.getRow() == two.getRow() && nima.getCol() == two.getCol()){
                 board.removePiece(nima.getRow(), nima.getCol());
                 board.removePiece(two.getRow(), two.getCol());
@@ -122,6 +129,8 @@ public class Game {
                 board.putPiece(two.getRow(), two.getCol(), Color.RED);
                 
                 two.crash();
+                
+                game = false;
                 
             }else if(nima.getRow() == three.getRow() && nima.getCol() == three.getCol()){
                 
@@ -132,6 +141,8 @@ public class Game {
                 
                 three.crash();
                 
+                game = false;
+                
             }
             
                        
@@ -141,6 +152,8 @@ public class Game {
                 (one.getRow() == two.getRow() && one.getCol() == two.getCol())){
             
             board.setMessage("YOU WIN!!!");
+            
+            game = false;
             
         }
         
