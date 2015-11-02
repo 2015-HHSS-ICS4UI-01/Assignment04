@@ -69,8 +69,10 @@ public class Game {
             board.removePiece(one.getRow(), one.getCol());
             board.removePiece(two.getRow(), two.getCol());
             //add a new piece at the spot they crashed
-            board.putPiece(two.getRow(), two.getCol(), Color.RED);   
+            board.putPiece(one.getRow(), one.getCol(), Color.RED);
             
+            one.crash();
+            two.crash();
         }
         
         if(three.getRow() == two.getRow() && three.getCol() == two.getCol()){
@@ -78,9 +80,10 @@ public class Game {
             board.removePiece(three.getRow(), three.getCol());
             board.removePiece(two.getRow(), two.getCol());
             //add a new piece at the spot they crashed
-            board.putPiece(two.getRow(), two.getCol(), Color.RED);
+            board.putPiece(two.getRow(), two.getCol(), Color.RED);    
             
-            
+            three.crash();
+            two.crash();
         }
         
         if(one.getRow() == three.getRow() && one.getCol() == three.getCol()){
@@ -88,9 +91,54 @@ public class Game {
             board.removePiece(one.getRow(), one.getCol());
             board.removePiece(three.getRow(), three.getCol());
             //add a new piece at the spot they crashed
-            board.putPiece(one.getRow(), one.getCol(), Color.RED);  
+            board.putPiece(three.getRow(), three.getCol(), Color.RED); 
+            
+            one.crash();
+            three.crash();
+        }        
+        
+        if((nima.getRow() == one.getRow() && nima.getCol() == one.getCol()) || (nima.getRow() == two.getRow() && nima.getCol() == two.getCol()) ||
+                (nima.getRow() == three.getRow() && nima.getCol() == three.getCol())){
+            
+            board.setMessage("YOU LOSE!!!");
+            
+            if(nima.getRow() == one.getRow() && nima.getCol() == one.getCol()){
+                board.removePiece(nima.getRow(), nima.getCol());
+                board.removePiece(one.getRow(), one.getCol());
+                
+                board.putPiece(one.getRow(), one.getCol(), Color.RED);
+                
+                one.crash();
+                
+            }else if(nima.getRow() == two.getRow() && nima.getCol() == two.getCol()){
+                board.removePiece(nima.getRow(), nima.getCol());
+                board.removePiece(two.getRow(), two.getCol());
+                
+                board.putPiece(two.getRow(), two.getCol(), Color.RED);
+                
+                two.crash();
+                
+            }else if(nima.getRow() == three.getRow() && nima.getCol() == three.getCol()){
+                
+                board.removePiece(nima.getRow(), nima.getCol());
+                board.removePiece(three.getRow(), three.getCol());
+                
+                board.putPiece(three.getRow(), three.getCol(), Color.RED);
+                
+                three.crash();
+                
+            }
+            
+                       
+        }
+        
+        if((one.getRow() == three.getRow() && one.getCol() == three.getCol()) && (three.getRow() == two.getRow() && three.getCol() == two.getCol()) && 
+                (one.getRow() == two.getRow() && one.getCol() == two.getCol())){
+            
+            board.setMessage("YOU WIN!!!");
             
         }
+        
         
         }        
     }

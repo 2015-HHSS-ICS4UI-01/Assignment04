@@ -37,8 +37,8 @@ public class Doctor {
             col = firstCol;
         }else{
             
-            row = (int)(Math.random()*20);
-            col = (int)(Math.random()*20);
+            row = (int)(Math.random()*8);
+            col = (int)(Math.random()*8);
             
         }
         

@@ -22,6 +22,8 @@ public class Dalek {
     
     public void advanceTowards(Doctor doc){
         
+        if(hasCrashed == false){
+        
         //finding where the doctor is
         int docRow = doc.getRow();
         int docCol = doc.getCol();
@@ -38,6 +40,10 @@ public class Dalek {
             col = col - 1;
         }
         
+        }else{
+            row = row;
+            col = col;
+        }
         
     }
     
