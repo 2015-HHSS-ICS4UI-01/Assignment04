@@ -25,9 +25,9 @@ public class Doctor {
     }
     
     /**
-     * 
-     * @param row
-     * @param col 
+     * moves the doctor
+     * @param row this is the row that the doctor moves on
+     * @param col this is the column that the doctor moves on
      */
     public void move(int firstRow, int firstCol){
         
@@ -37,8 +37,8 @@ public class Doctor {
             col = firstCol;
         }else{
             
-            row = (int)(Math.random()*20);
-            col = (int)(Math.random()*20);
+            row = (int)(Math.random()*8);
+            col = (int)(Math.random()*8);
             
         }
         

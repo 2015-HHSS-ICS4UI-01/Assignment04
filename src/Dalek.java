@@ -18,25 +18,37 @@ public class Dalek {
         row = startRow;
         col = startCol;
         hasCrashed = false;
+        
     }
     
     public void advanceTowards(Doctor doc){
         
-        //finding where the doctor is
-        int docRow = doc.getRow();
-        int docCol = doc.getCol();
         
-        if(row < docRow){
-            row = row + 1;
-        }else if(row > docRow){
-            row = row - 1;
+        if(hasCrashed == false){
+            
+            //finding where the doctor is
+            int docRow = doc.getRow();
+            int docCol = doc.getCol();
+        
+            if(row < docRow){
+                row = row + 1;
+            }else if(row > docRow){
+             row = row - 1;
+            }
+        
+            if(col < docCol){
+                col = col + 1;
+            }else if(col > docCol){
+                col = col - 1;
+            }
+        
+        }else if(hasCrashed == true){
+                
+            row = row;
+            col = col;
+            
         }
         
-        if(col < docCol){
-            col = col + 1;
-        }else if(col > docCol){
-            col = col - 1;
-        }
         
         
     }

@@ -12,7 +12,11 @@ import java.awt.Color;
  */
 public class Game {
     
+    
     public static void main(String[] args) {
+        
+        
+        
         //initiates the doctors coordinates
         int docRow = (int)(Math.random()*8); 
         int docCol = (int)(Math.random()*8); 
@@ -39,6 +43,7 @@ public class Game {
         board.putPiece(one.getRow(), one.getCol(), Color.BLUE);
         board.putPiece(dalRow2, dalCol2, Color.BLUE);
         board.putPiece(dalRow3, dalCol3, Color.BLUE);
+        
         
         while(true){
         
@@ -69,7 +74,10 @@ public class Game {
             board.removePiece(one.getRow(), one.getCol());
             board.removePiece(two.getRow(), two.getCol());
             //add a new piece at the spot they crashed
-            board.putPiece(two.getRow(), two.getCol(), Color.RED);   
+            board.putPiece(one.getRow(), one.getCol(), Color.RED);
+            
+            one.crash();
+            two.crash();
             
         }
         
@@ -80,6 +88,8 @@ public class Game {
             //add a new piece at the spot they crashed
             board.putPiece(two.getRow(), two.getCol(), Color.RED);
             
+            two.crash();
+            three.crash();
             
         }
         
@@ -88,7 +98,23 @@ public class Game {
             board.removePiece(one.getRow(), one.getCol());
             board.removePiece(three.getRow(), three.getCol());
             //add a new piece at the spot they crashed
-            board.putPiece(one.getRow(), one.getCol(), Color.RED);  
+            board.putPiece(three.getRow(), three.getCol(), Color.RED);  
+            
+            one.crash();
+            three.crash();
+        }
+        
+        if((nima.getRow() == one.getRow() && nima.getCol() == one.getCol()) || (nima.getRow() == two.getRow() && nima.getCol() == two.getCol()) 
+                || (nima.getRow() == one.getRow() && nima.getCol() == one.getCol())){
+            
+            board.setMessage("YOU LOSE!!"); 
+            
+        }
+        
+        if(one.getRow() == three.getRow() && one.getCol() == three.getCol() && two.getRow() == three.getRow() && two.getCol() == three.getCol() &&
+              one.getRow() == two.getRow() && one.getCol() == two.getCol()  ){
+            
+            board.setMessage("YOU WIN!!");
             
         }
         
