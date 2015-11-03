@@ -18,30 +18,45 @@ import javax.swing.JFrame;
  */
 public class GameBoard extends JComponent implements MouseListener {
 
-    private Color[][] grid = new Color[8][8];
+    private final int BOARD_WIDTH;
+    private final int BOARD_HEIGHT;
+    private Color[][] grid = null;
     private String message = "";
     private JFrame window;
-    private final int TILE_SIZE = 100;
+    private final int TILE_SIZE;
     private Coordinate click = null;
 
     /**
      * Creates a brand new empty 8x8 Board
+     * @param width the tile count for the width of the board
+     * @param height the tile count for the height of the board
      */
-    public GameBoard() {
+    public GameBoard(int width, int height) {
+        
+        // set board width and height
+        BOARD_WIDTH = width;
+        BOARD_HEIGHT = height;
+        
+        TILE_SIZE = 800/BOARD_WIDTH;
+        
+        // initialize the grid
+        grid = new Color[BOARD_WIDTH][BOARD_HEIGHT];
+        
         // sets all positions to be null
-        for (int row = 0; row < 8; row++) {
-            for (int col = 0; col < 8; col++) {
+        for (int row = 0; row < BOARD_WIDTH; row++) {
+            for (int col = 0; col < BOARD_HEIGHT; col++) {
                 grid[row][col] = null;
             }
         }
+        
         // create the frame to display the board
-        window = new JFrame("Game Board");
+        window = new JFrame("SUPER EPIC GAME");
         // add the board to the frame
         window.add(this);
         // make the frame visible
         window.setVisible(true);
         //set the size of our board
-        this.setPreferredSize(new Dimension(8 * TILE_SIZE + 50, 8 * TILE_SIZE + 100));
+        this.setPreferredSize(new Dimension(BOARD_WIDTH * TILE_SIZE + 50, BOARD_HEIGHT * TILE_SIZE + 100));
         // resize the window
         window.pack();
         //set the X
@@ -52,18 +67,17 @@ public class GameBoard extends JComponent implements MouseListener {
 
     /**
      * Drawing the Game Board
-     *
      * @param g Graphics object to draw with
      */
     @Override
     public void paintComponent(Graphics g) {
-        for (int row = 0; row < 8; row++) {
-            for (int col = 0; col < 8; col++) {
+        for (int row = 0; row < BOARD_WIDTH; row++) {
+            for (int col = 0; col < BOARD_HEIGHT; col++) {
                 // alternate the colours of the grid
                 if ((row + col) % 2 == 0) {
-                    g.setColor(Color.WHITE);
+                    g.setColor(Color.GRAY);
                 } else {
-                    g.setColor(Color.BLACK);
+                    g.setColor(Color.LIGHT_GRAY);
                 }
                 // draws a single grid spot
                 g.fillRect(col * TILE_SIZE + TILE_SIZE / 4, row * TILE_SIZE + TILE_SIZE / 4, TILE_SIZE, TILE_SIZE);
@@ -74,8 +88,9 @@ public class GameBoard extends JComponent implements MouseListener {
                 }
             }
         }
+        // Draws the current message to the board
         g.setColor(Color.BLACK);
-        g.drawString(message, TILE_SIZE/4, TILE_SIZE*8 + TILE_SIZE/2);
+        g.drawString(message, TILE_SIZE/4, TILE_SIZE*BOARD_WIDTH + TILE_SIZE/2);
     }
 
     /**
@@ -91,7 +106,7 @@ public class GameBoard extends JComponent implements MouseListener {
     }
 
     /**
-     * Removes a piece that is on the board
+     * Clears a tile on the board
      *
      * @param row the row to remove the piece from
      * @param col the column to remove the piece from
@@ -122,23 +137,6 @@ public class GameBoard extends JComponent implements MouseListener {
     public void setMessage(String theMessage) {
         message = theMessage;
         repaint();
-    }
-
-    public void printBoard() {
-        for (int row = 0; row < 8; row++) {
-            for (int col = 0; col < 8; col++) {
-                if (grid[row][col] == Color.RED) {
-                    System.out.print("R  ");
-                } else if (grid[row][col] == Color.BLUE) {
-                    System.out.print("B  ");
-                } else if (grid[row][col] == null) {
-                    System.out.print("_  ");
-                }
-            }
-            System.out.println("");
-        }
-        System.out.println(message);
-        System.out.println("");
     }
 
     public Coordinate getClick(){
@@ -174,8 +172,8 @@ public class GameBoard extends JComponent implements MouseListener {
         int col = x / TILE_SIZE;
         
         // validate the coordinate
-        if(row >= 0 && row <= 7 
-                && col >= 0 && col <= 7){
+        if(row >= 0 && row < BOARD_WIDTH 
+                && col >= 0 && col < BOARD_HEIGHT){
             click = new Coordinate(row,col);
         }
         
@@ -194,5 +192,21 @@ public class GameBoard extends JComponent implements MouseListener {
     @Override
     public void mouseExited(MouseEvent e) {
         
+    }
+    /**
+     * Getter for the board width
+     * @return width of the board
+     */
+    public int getBoardWidth()
+    {
+        return BOARD_WIDTH;
+    }
+    /**
+     * Getter for the board height
+     * @return height of the board
+     */
+    public int getBoardHeight()
+    {
+        return BOARD_HEIGHT;
     }
 }
