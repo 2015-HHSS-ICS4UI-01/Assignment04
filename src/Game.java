@@ -100,7 +100,7 @@ public class Game {
                 }
             } while (!gameover);
             try {
-                Thread.sleep(1750);
+                Thread.sleep(2000);
             } catch (Exception e) {
                 e.printStackTrace();
             }
