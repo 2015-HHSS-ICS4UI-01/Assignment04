@@ -19,7 +19,7 @@ public class Game {
         //initializing objects/variables
         GameBoard board = new GameBoard();
         Random rand = new Random();
-        Dalek[] dalek = new Dalek[9]; //three daleks on the gameboard
+        Dalek[] dalek = new Dalek[3]; //three daleks on the gameboard
         Doctor theDoctor = new Doctor(rand.nextInt(board.getBoardWidth()), rand.nextInt(board.getBoardLength())); //randomly generate starting position of the doctor 
         boolean gameOver = false; //boolean for whether a gameover event has occurred
         int moves = 0;
