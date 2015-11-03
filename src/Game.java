@@ -19,16 +19,24 @@ public class Game {
         
         
         //initiates the doctors coordinates
-        int docRow = (int)(Math.random()*8); 
-        int docCol = (int)(Math.random()*8); 
+        int docRow = (int)(Math.random()*16); 
+        int docCol = (int)(Math.random()*16); 
         
         //initiates the daleks coordinates
-        int dalRow1 = (int)(Math.random()*8); 
-        int dalCol1 = (int)(Math.random()*8); 
-        int dalRow2 = (int)(Math.random()*8); 
-        int dalCol2 = (int)(Math.random()*8); 
-        int dalRow3 = (int)(Math.random()*8); 
-        int dalCol3 = (int)(Math.random()*8); 
+        int dalRow1 = (int)(Math.random()*16); 
+        int dalCol1 = (int)(Math.random()*16); 
+        int dalRow2 = (int)(Math.random()*16); 
+        int dalCol2 = (int)(Math.random()*16); 
+        int dalRow3 = (int)(Math.random()*16); 
+        int dalCol3 = (int)(Math.random()*16); 
+        int dalRow4 = (int)(Math.random()*16); 
+        int dalCol4 = (int)(Math.random()*16);
+        int dalRow5 = (int)(Math.random()*16); 
+        int dalCol5 = (int)(Math.random()*16);
+        int dalRow6 = (int)(Math.random()*16); 
+        int dalCol6 = (int)(Math.random()*16);
+        int dalRow7 = (int)(Math.random()*16); 
+        int dalCol7 = (int)(Math.random()*16);
         
         //creates the gameboard to work on
         GameBoard board = new GameBoard();
@@ -37,6 +45,10 @@ public class Game {
         Dalek one = new Dalek(dalRow1, dalCol1);
         Dalek two = new Dalek(dalRow2, dalCol2);
         Dalek three = new Dalek(dalRow3, dalCol3);
+        Dalek four = new Dalek(dalRow4, dalCol4);
+        Dalek five = new Dalek(dalRow5, dalCol5);
+        Dalek six = new Dalek(dalRow6, dalCol6);
+        Dalek seven = new Dalek(dalRow7, dalCol7);
         Doctor nima = new Doctor(docRow, docCol);
                       
         //randomly spawns the daleks and the doctor
@@ -44,6 +56,10 @@ public class Game {
         board.putPiece(one.getRow(), one.getCol(), Color.BLUE);
         board.putPiece(dalRow2, dalCol2, Color.BLUE);
         board.putPiece(dalRow3, dalCol3, Color.BLUE);
+        board.putPiece(dalRow4, dalCol4, Color.BLUE);
+        board.putPiece(dalRow5, dalCol5, Color.BLUE);
+        board.putPiece(dalRow6, dalCol6, Color.BLUE);
+        board.putPiece(dalRow7, dalCol7, Color.BLUE);
         
         boolean game = true;
         
@@ -57,6 +73,10 @@ public class Game {
         board.removePiece(one.getRow(), one.getCol());
         board.removePiece(two.getRow(), two.getCol());
         board.removePiece(three.getRow(), three.getCol());
+        board.removePiece(four.getRow(), four.getCol());
+        board.removePiece(five.getRow(), five.getCol());
+        board.removePiece(six.getRow(), six.getCol());
+        board.removePiece(seven.getRow(), seven.getCol());
         
         //moves the doctor
         nima.move(click.getRow(), click.getCol());
@@ -69,6 +89,14 @@ public class Game {
         board.putPiece(two.getRow(), two.getCol() , Color.BLUE);
         three.advanceTowards(nima);
         board.putPiece(three.getRow(), three.getCol() , Color.BLUE);
+        four.advanceTowards(nima);
+        board.putPiece(four.getRow(), four.getCol() , Color.BLUE);
+        five.advanceTowards(nima);
+        board.putPiece(five.getRow(), five.getCol() , Color.BLUE);
+        six.advanceTowards(nima);
+        board.putPiece(six.getRow(), six.getCol() , Color.BLUE);
+        seven.advanceTowards(nima);
+        board.putPiece(seven.getRow(), seven.getCol() , Color.BLUE);
         
         //crashing the daleks
         if(one.getRow() == two.getRow() && one.getCol() == two.getCol()){
