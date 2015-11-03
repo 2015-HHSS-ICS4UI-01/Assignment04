@@ -129,8 +129,10 @@ public class GameBoard extends JComponent implements MouseListener {
             for (int col = 0; col < 8; col++) {
                 if (grid[row][col] == Color.RED) {
                     System.out.print("R  ");
-                } else if (grid[row][col] == Color.BLUE) {
-                    System.out.print("B  ");
+                } else if (grid[row][col] == Color.green) {
+                    System.out.print("G  ");
+                } else if (grid[row][col] == Color.gray) {
+                    System.out.print("G  ");
                 } else if (grid[row][col] == null) {
                     System.out.print("_  ");
                 }
