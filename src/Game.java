@@ -15,6 +15,8 @@ public class Game {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+
+        //makes all used variables
         GameBoard board = new GameBoard();
         board.clearBoard();
         int row, col;
@@ -22,7 +24,11 @@ public class Game {
         Doctor doc;
         boolean gameover, overlapping;
         while (true) {
+
+            //sets the game to not over, allows game to replay without closing window
             gameover = false;
+
+            //makes 3 daleks at random spots that don't overlap
             do {
                 for (int i = 0; i < daleks.length; i++) {
                     daleks[i] = new Dalek((int) (Math.random() * 8), (int) (Math.random() * 8));
@@ -36,6 +42,8 @@ public class Game {
                     }
                 }
             } while (overlapping);
+
+            //makes a doctor at random spot that doesn't overlap with daleks 
             do {
                 overlapping = false;
                 doc = new Doctor((int) (Math.random() * 8), (int) (Math.random() * 8));
@@ -45,32 +53,39 @@ public class Game {
                     }
                 }
             } while (overlapping);
+
+            //places all the pieces 
             for (int i = 0; i < daleks.length; i++) {
                 board.putPiece(daleks[i].getRow(), daleks[i].getCol(), Color.BLACK);
+                board.putPiece(doc.getRow(), doc.getCol(), Color.GREEN);
             }
-            board.putPiece(doc.getRow(), doc.getCol(), Color.GREEN);
             do {
-
-                //Doctor Code
-
+                /**
+                 * Doctor Code
+                 */
                 Coordinate coordinate = board.getClick();
                 board.removePiece(doc.getRow(), doc.getCol());
                 row = coordinate.getRow();
                 col = coordinate.getCol();
                 doc.move(row, col);
                 board.putPiece(doc.getRow(), doc.getCol(), Color.GREEN);
-
-                //Dalek Code
-
+                /**
+                 * Dalek Code
+                 */
+                //removes dalek pieces
                 for (int i = 0; i < daleks.length; i++) {
                     board.removePiece(daleks[i].getRow(), daleks[i].getCol());
                 }
+
+                //moves all uncrashed daleks towards the doctor
                 for (int i = 0; i < daleks.length; i++) {
                     if (!daleks[i].hasCrashed()) {
                         daleks[i].move(doc);
                     }
                 }
-                for (int i = 0; i < daleks.length; i++) {
+
+                //crashes any daleks that collide
+                for (int i = 0; i < daleks.length - 1; i++) {
                     for (int j = i + 1; j < daleks.length; j++) {
                         if (daleks[i].getRow() == daleks[j].getRow() && daleks[i].getCol() == daleks[j].getCol()) {
                             daleks[i].crash();
@@ -78,6 +93,8 @@ public class Game {
                         }
                     }
                 }
+
+                //places all dalek pieces back on board
                 for (int i = 0; i < daleks.length; i++) {
                     if (!daleks[i].hasCrashed()) {
                         board.putPiece(daleks[i].getRow(), daleks[i].getCol(), Color.BLACK);
@@ -85,6 +102,19 @@ public class Game {
                         board.putPiece(daleks[i].getRow(), daleks[i].getCol(), Color.RED);
                     }
                 }
+
+                //tells user they have won and ends game
+                gameover = true;
+                for (int i = 0; i < daleks.length; i++) {
+                    if (!daleks[i].hasCrashed()) {
+                        gameover = false;
+                    }
+                }
+                if (gameover) {
+                    board.setMessage("You destroyed all the daleks!");
+                }
+
+                //tells user they have lost and ends game
                 for (int i = 0; i < daleks.length; i++) {
                     if (daleks[i].getRow() == doc.getRow() && daleks[i].getCol() == doc.getCol()) {
                         board.setMessage("You were captured by a dalek!");
@@ -92,20 +122,14 @@ public class Game {
                         gameover = true;
                     }
                 }
-                if (!gameover) {
-                    if (daleks[0].hasCrashed() && daleks[1].hasCrashed() && daleks[2].hasCrashed()) {
-                        board.setMessage("You destroyed all the daleks!");
-                        gameover = true;
-                    }
-                }
             } while (!gameover);
+            //waits 2 seconds before restarting game       
             try {
                 Thread.sleep(2000);
             } catch (Exception e) {
-                e.printStackTrace();
             }
-            board.setMessage("");
-            board.clearBoard();
+            board.setMessage(""); //clears message
+            board.clearBoard();   //clears board of all pieces
         }
     }
 }
