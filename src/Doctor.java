@@ -10,25 +10,32 @@
  */
 public class Doctor {
     
-    private int x;
-    private int y;
+    private int row;
+    private int col;
     
-    public Doctor(int startX, int startY){
-        x=startX;
-        y=startY;
+    public Doctor(int startRow, int startCol){
+        row=startRow;
+        col=startCol;
     }
     
     //teleport and move
-    public void move(int x, int y)
-    {
+    public void move(int row, int col){
+        if((this.row==row-1||this.row==row||this.row==row+1)&&(this.col==col-1||this.col==col||this.col==col+1)){
+        this.row=row;
+        this.col=col;
+        }
+        else{
+            this.row=(int)(Math.random()*8);
+            this.col=(int)(Math.random()*8);
+        }
         
     }
     
-    public int getX(){
-        
+    public int getRow(){
+        return this.row;
     }
     
-    public int getY(){
-        
+    public int getCol(){
+        return this.col;
     }
 }
