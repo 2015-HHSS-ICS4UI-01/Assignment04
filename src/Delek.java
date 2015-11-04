@@ -20,6 +20,10 @@ public class Delek {
         hasCrashed=false;
     }
     
+    /**
+     * used to move the dalek toward the doctor
+     * @param doc the doctor used in the game class
+     */
     public void advanceTowards(Doctor doc){
         if(doc.getCol()>col)
             this.col++;
@@ -31,18 +35,33 @@ public class Delek {
             this.row--;
     }
     
+    /**
+     * whether the dalek has crashed or not
+     */
     public  void crash(){
         hasCrashed=true;
     }
     
+    /**
+     * 
+     * @return the row that the dalek is in currently on the board
+     */
     public int getRow(){
         return this.row;
     }
     
+    /**
+     * 
+     * @return the colum that the dalek is in currently on the board
+     */
     public int getCol(){
         return this.col;
     }
     
+    /**
+     * 
+     * @return whether the dalek has crashed or not
+     */
     public boolean getCrash(){
         return hasCrashed;
     }
