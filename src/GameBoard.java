@@ -61,9 +61,9 @@ public class GameBoard extends JComponent implements MouseListener {
             for (int col = 0; col < 8; col++) {
                 // alternate the colours of the grid
                 if ((row + col) % 2 == 0) {
-                    g.setColor(Color.WHITE);
+                    g.setColor(Color.YELLOW);
                 } else {
-                    g.setColor(Color.BLACK);
+                    g.setColor(Color.CYAN);
                 }
                 // draws a single grid spot
                 g.fillRect(col * TILE_SIZE + TILE_SIZE / 4, row * TILE_SIZE + TILE_SIZE / 4, TILE_SIZE, TILE_SIZE);
@@ -89,6 +89,7 @@ public class GameBoard extends JComponent implements MouseListener {
         grid[row][col] = colour;
         repaint();
     }
+    
 
     /**
      * Removes a piece that is on the board
@@ -101,18 +102,6 @@ public class GameBoard extends JComponent implements MouseListener {
         repaint();
     }
 
-    /**
-     * Removes all piece from the board
-     */
-    public void clearBoard() {
-        // sets all positions to be null
-        for (int row = 0; row < 8; row++) {
-            for (int col = 0; col < 8; col++) {
-                grid[row][col] = null;
-            }
-        }
-        repaint();
-    }
 
     /**
      * Displays a message on the game area
@@ -122,23 +111,6 @@ public class GameBoard extends JComponent implements MouseListener {
     public void setMessage(String theMessage) {
         message = theMessage;
         repaint();
-    }
-
-    public void printBoard() {
-        for (int row = 0; row < 8; row++) {
-            for (int col = 0; col < 8; col++) {
-                if (grid[row][col] == Color.RED) {
-                    System.out.print("R  ");
-                } else if (grid[row][col] == Color.BLUE) {
-                    System.out.print("B  ");
-                } else if (grid[row][col] == null) {
-                    System.out.print("_  ");
-                }
-            }
-            System.out.println("");
-        }
-        System.out.println(message);
-        System.out.println("");
     }
 
     public Coordinate getClick(){
