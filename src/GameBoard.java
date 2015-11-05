@@ -179,6 +179,8 @@ public class GameBoard extends JComponent implements MouseListener {
             click = new Coordinate(row,col);
         }
         
+        
+        
     }
 
     @Override
