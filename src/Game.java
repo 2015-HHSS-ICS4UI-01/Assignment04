@@ -108,14 +108,14 @@ public class Game {
                     
                     won = false;
                     
-                }//if all daleks have crashed
-                //the game ends
+                }//check if all daleks have crashed
+                //if they have, the game ends
                 //the player wins the game
                 if(dalek1.hasCrashed() && dalek2.hasCrashed() && dalek3.hasCrashed() && won){
                     inProgress = false;
                 }
                 
-                //all checks have been performed, allow the next turn to be made
+                //all checks have been performed, allow Doctor's next turn to be made
                 startCheck = false;
             }
             //allow the Doctor to click and move for one turn
@@ -149,7 +149,7 @@ public class Game {
                 
                 //moves the Daleks around on the board
                 //if they have not crashed, they will move towards the Doctor
-                //if they have crashed, they well remain in the same spot and not move
+                //if they have crashed, they will remain in the same spot and not move
                 if(!dalek1.hasCrashed()){
                     dalek1.advanceTowards(doctor);
                     //repaint the Dalek
@@ -164,6 +164,7 @@ public class Game {
                     //repaint the Dalek
                     board.putPiece(dalek2.getRow(), dalek2.getCol(), Color.BLUE);
                 }else if(dalek2.hasCrashed()){
+                    //repaint the Dalek
                     board.putPiece(dalek2.getRow(), dalek2.getCol(), Color.RED);
                 }
                 
