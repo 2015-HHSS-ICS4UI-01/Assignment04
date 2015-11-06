@@ -19,29 +19,29 @@ public class Game {
         //makes all used variables
         GameBoard board = new GameBoard();
         board.clearBoard();
-        int row, col;
-        Dalek[] daleks = new Dalek[3];
+        int row, col, length = 3;
+        if (length > 55) {
+            length = 55;
+        } else if (length < 2) {
+            length = 2;
+        }
+        Dalek[] daleks = new Dalek[length];
         Doctor doc;
         boolean gameover, overlapping;
         while (true) {
 
-            //sets the game to not over, allows game to replay without closing window
-            gameover = false;
-
-            //makes 3 daleks at random spots that don't overlap
-            do {
-                for (int i = 0; i < daleks.length; i++) {
+            //makes desired number of daleks at random spots that don't overlap
+            for (int i = 0; i < daleks.length; i++) {
+                do {
+                    overlapping = false;
                     daleks[i] = new Dalek((int) (Math.random() * 8), (int) (Math.random() * 8));
-                }
-                overlapping = false;
-                for (int i = 0; i < daleks.length - 1; i++) {
-                    for (int j = i + 1; j < daleks.length; j++) {
+                    for (int j = i - 1; j >= 0; j--) {
                         if (daleks[i].getRow() == daleks[j].getRow() && daleks[i].getCol() == daleks[j].getCol()) {
                             overlapping = true;
                         }
                     }
-                }
-            } while (overlapping);
+                } while (overlapping);
+            }
 
             //makes a doctor at random spot that doesn't overlap with daleks 
             do {
@@ -57,21 +57,14 @@ public class Game {
             //places all the pieces 
             for (int i = 0; i < daleks.length; i++) {
                 board.putPiece(daleks[i].getRow(), daleks[i].getCol(), Color.BLACK);
-                board.putPiece(doc.getRow(), doc.getCol(), Color.GREEN);
             }
+            board.putPiece(doc.getRow(), doc.getCol(), Color.GREEN);
             do {
-                /**
-                 * Doctor Code
-                 */
                 Coordinate coordinate = board.getClick();
                 board.removePiece(doc.getRow(), doc.getCol());
-                row = coordinate.getRow();
-                col = coordinate.getCol();
-                doc.move(row, col);
+                doc.move(coordinate.getRow(), coordinate.getCol());
                 board.putPiece(doc.getRow(), doc.getCol(), Color.GREEN);
-                /**
-                 * Dalek Code
-                 */
+
                 //removes dalek pieces
                 for (int i = 0; i < daleks.length; i++) {
                     board.removePiece(daleks[i].getRow(), daleks[i].getCol());
