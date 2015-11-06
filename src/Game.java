@@ -40,7 +40,7 @@ public class Game {
         board.putPiece(cena.getRow(), cena.getCol(), Color.YELLOW);
         board.putPiece(pepe.getRow(), pepe.getCol(), Color.YELLOW);
         //This loop will run while the game should not have ended and all of the daleks have not crashed yet.
-        while(end==false && leo.hasCrashed()==false || cena.hasCrashed()==false || pepe.hasCrashed()==false){
+        while(end==false && (leo.hasCrashed()==false || cena.hasCrashed()==false || pepe.hasCrashed()==false)){
            
             //The if statments above the movement are to check if the Doctor or any of the Daleks spawn on top of eachother, the same
             //if statments are repeated below after movment to see if there was any crashing.
