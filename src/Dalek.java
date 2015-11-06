@@ -9,15 +9,20 @@
  */
 public class Dalek {
 
-    private int x;
-    private int y;
-    private boolean hasCrashed = false;
+    private int x; //dalek's x position
+    private int y; //dalek's y position
+    private boolean hasCrashed = false; //dalek's state of crash or alive
 
     public Dalek(int x, int y) {
         this.x = x;
         this.y = y;
     }
 
+    /**
+     * Move the dalek towards the doctor
+     *
+     * @param doctor the doctor to move towards
+     */
     public void advanceTowards(Doctor doctor) {
         if (doctor.getX() > this.x) {
             this.x++;
@@ -31,15 +36,18 @@ public class Dalek {
         }
     }
 
-    public void move(int x, int y) {
-        this.x = x;
-        this.y = y;
-    }
-
+    /**
+     * Set the state of the dalek as crashed
+     */
     public void crash() {
         hasCrashed = true;
     }
 
+    /**
+     * if the dalek has crashed
+     *
+     * @return true for crash, false for alive
+     */
     public boolean hasCrashed() {
         return this.hasCrashed;
     }

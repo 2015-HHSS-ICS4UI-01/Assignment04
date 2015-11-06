@@ -19,17 +19,18 @@ public class Game {
 
         Random random = new Random(); //used to randomly spawn objects
         boolean GameOver = false; // indicates the progress of the game
-        boolean allDaleksCrashed = true;
+        boolean allDaleksCrashed = true; // tests whether all the daleks have crashed
 
         Doctor doctor = new Doctor(random.nextInt(12), random.nextInt(12)); //spawn the doctor
-        Dalek[] daleks = new Dalek[2]; // initialize dalek array
+        Color doctorColour = Color.GREEN; // doctor's starting colour
+        Dalek[] daleks = new Dalek[3]; // initialize dalek array
         correctlySpawnDaleks(daleks, random, doctor); // calls helper method to correctly spawn daleks
         GameBoard board = new GameBoard(); //the game board
 
         while (!GameOver) { //if game is still running 
 
             //place the piece for doctor
-            board.putPiece(doctor.getX(), doctor.getY(), Color.GREEN);
+            board.putPiece(doctor.getX(), doctor.getY(), doctorColour);
             //place the pieces for daleks
             for (Dalek d : daleks) {
                 if (!d.hasCrashed()) { // if the dalek hasn't crashed yet
@@ -50,33 +51,32 @@ public class Game {
                     d.advanceTowards(doctor);
                 }
                 if (d.getX() == doctor.getX() && d.getY() == doctor.getY()) { // if the dalek catches the doctor
+                    doctorColour = Color.YELLOW; //change colour to captured colour
                     GameOver = true; // end game
                 }
             }
             dalekHasCrashed(daleks); // check if the dalek's new positions cause them to be crashed, and if so, crash them
-            allDaleksCrashed = true;
-            for (Dalek d : daleks) {
+            allDaleksCrashed = true; //whether all daleks have crashed
+            for (Dalek d : daleks) { //check to make sure all daleks are crashed
                 if (!d.hasCrashed()) {
                     allDaleksCrashed = false;
                 }
             }
-            if (allDaleksCrashed) {
+            if (allDaleksCrashed) { //if all daleks have crashed, end the game
                 GameOver = true;
             }
         }
         // if the game ends, draw the board for the last time
-        for (Dalek d : daleks) { // same as above method
+        for (Dalek d : daleks) { // same as the method before, placing the daleks in a colour according to their crash
             if (!d.hasCrashed()) {
-                board.putPiece(d.getX(), d.getY(), Color.BLACK);
+                board.putPiece(d.getX(), d.getY(), Color.BLACK); //black if still alive
             } else {
-                board.putPiece(d.getX(), d.getY(), Color.RED);
+                board.putPiece(d.getX(), d.getY(), Color.RED); //red if crashed
             }
         }
-        if (allDaleksCrashed) {
-            board.putPiece(doctor.getX(), doctor.getY(), Color.YELLOW); //place the doctor as yellow if caught
-        } else {
-            board.putPiece(doctor.getX(), doctor.getY(), Color.GREEN); //place the doctor as green if user won
-        }
+        //place doctor for the last time
+        board.putPiece(doctor.getX(), doctor.getY(), doctorColour);
+        //game over
         board.setMessage("Game Over");
     }
 
@@ -86,19 +86,16 @@ public class Game {
      * @param daleks array containing the daleks to be checked
      */
     public static void dalekHasCrashed(Dalek[] daleks) {
-        boolean allCrashed = true;
         for (int x = 0; x < daleks.length - 1; x++) {
             for (int y = x + 1; y < daleks.length; y++) {
                 //if the position of one dalek equals the position of another dalek
                 if (daleks[x].getX() == daleks[y].getX() && daleks[x].getY() == daleks[y].getY()) {
+                    //crash both daleks
                     daleks[x].crash();
                     daleks[y].crash();
-                } else {
-                    allCrashed = false;
                 }
             }
         }
-
     }
 
     /**
