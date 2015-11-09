@@ -6,7 +6,7 @@ import java.util.Random;
  * and open the template in the editor.
  */
 /**
- *
+ * Doctor class
  * @author branc2347
  */
 public class Doctor {

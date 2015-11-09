@@ -4,7 +4,7 @@
  */
 
 /**
- *
+ * Dalek object
  * @author branc2347
  */
 public class Dalek {

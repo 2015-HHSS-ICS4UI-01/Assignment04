@@ -52,6 +52,7 @@ public class Game {
                 }
                 if (d.getX() == doctor.getX() && d.getY() == doctor.getY()) { // if the dalek catches the doctor
                     doctorColour = Color.YELLOW; //change colour to captured colour
+                    board.setMessage("Game Over. You Lost");
                     GameOver = true; // end game
                 }
             }
@@ -63,6 +64,7 @@ public class Game {
                 }
             }
             if (allDaleksCrashed) { //if all daleks have crashed, end the game
+                board.setMessage("Game Over. You Won");
                 GameOver = true;
             }
         }
@@ -77,7 +79,7 @@ public class Game {
         //place doctor for the last time
         board.putPiece(doctor.getX(), doctor.getY(), doctorColour);
         //game over
-        board.setMessage("Game Over");
+        
     }
 
     /**

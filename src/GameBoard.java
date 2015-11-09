@@ -18,13 +18,14 @@ import javax.swing.JFrame;
  */
 public class GameBoard extends JComponent implements MouseListener {
 
-    private Color[][] grid = new Color[12][12];
-    private String message = "";
-    private final int TILE_SIZE = 50;
+    private Color[][] grid = new Color[12][12]; // grid size
+    private String message = ""; // message indicating game over
+    private final int TILE_SIZE = 50; //size of each game tile
     private JFrame window;
     private Coordinate click = null;
 
-    public GameBoard() {
+    public GameBoard() { 
+        //initialize every spot int the grid as null
         for (int x = 0; x < grid.length; x++) {
             for (int y = 0; y < grid.length; y++) {
                 grid[x][y] = null;
@@ -38,6 +39,7 @@ public class GameBoard extends JComponent implements MouseListener {
         window.setVisible(true);
         window.setPreferredSize(new Dimension(grid.length * TILE_SIZE + 50, grid.length * TILE_SIZE + 100));
         window.pack();
+        //close when the x is pressed
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         //add the mouse listener to the game board
         this.addMouseListener(this);
@@ -48,20 +50,21 @@ public class GameBoard extends JComponent implements MouseListener {
 
         for (int x = 0; x < grid.length; x++) {
             for (int y = 0; y < grid.length; y++) {
-
+                //alternate every tile with a different colour, creates a checker-style board
                 if ((x + y) % 2 == 0) {
                     g.setColor(Color.LIGHT_GRAY);
                 } else {
                     g.setColor(Color.GRAY);
                 }
                 g.fillRect(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
-
+                //draws the pieces
                 if (grid[x][y] != null) {
                     g.setColor(grid[x][y]);
                     g.fillOval(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
                 }
             }
         }
+        //message
         g.setColor(Color.BLACK);
         g.drawString(message, 3, grid.length * TILE_SIZE + 25);
 
