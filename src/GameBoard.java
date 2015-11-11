@@ -18,10 +18,10 @@ import javax.swing.JFrame;
  */
 public class GameBoard extends JComponent implements MouseListener {
 
-    private Color[][] grid = new Color[8][8];
+    private Color[][] grid = new Color[16][16];
     private String message = "";
     private JFrame window;
-    private final int TILE_SIZE = 100;
+    private final int TILE_SIZE = 50;
     private Coordinate click = null;
 
     /**
@@ -29,8 +29,8 @@ public class GameBoard extends JComponent implements MouseListener {
      */
     public GameBoard() {
         // sets all positions to be null
-        for (int row = 0; row < 8; row++) {
-            for (int col = 0; col < 8; col++) {
+        for (int row = 0; row < 16; row++) {
+            for (int col = 0; col < 16; col++) {
                 grid[row][col] = null;
             }
         }
@@ -41,7 +41,7 @@ public class GameBoard extends JComponent implements MouseListener {
         // make the frame visible
         window.setVisible(true);
         //set the size of our board
-        this.setPreferredSize(new Dimension(8 * TILE_SIZE + 50, 8 * TILE_SIZE + 100));
+        this.setPreferredSize(new Dimension(16 * TILE_SIZE + 50, 16 * TILE_SIZE + 100));
         // resize the window
         window.pack();
         //set the X
@@ -57,11 +57,11 @@ public class GameBoard extends JComponent implements MouseListener {
      */
     @Override
     public void paintComponent(Graphics g) {
-        for (int row = 0; row < 8; row++) {
-            for (int col = 0; col < 8; col++) {
+        for (int row = 0; row < 16; row++) {
+            for (int col = 0; col < 16; col++) {
                 // alternate the colours of the grid
                 if ((row + col) % 2 == 0) {
-                    g.setColor(Color.WHITE);
+                    g.setColor(Color.GRAY);
                 } else {
                     g.setColor(Color.BLACK);
                 }
@@ -106,8 +106,8 @@ public class GameBoard extends JComponent implements MouseListener {
      */
     public void clearBoard() {
         // sets all positions to be null
-        for (int row = 0; row < 8; row++) {
-            for (int col = 0; col < 8; col++) {
+        for (int row = 0; row < 16; row++) {
+            for (int col = 0; col < 16; col++) {
                 grid[row][col] = null;
             }
         }
@@ -125,8 +125,8 @@ public class GameBoard extends JComponent implements MouseListener {
     }
 
     public void printBoard() {
-        for (int row = 0; row < 8; row++) {
-            for (int col = 0; col < 8; col++) {
+        for (int row = 0; row < 16; row++) {
+            for (int col = 0; col < 16; col++) {
                 if (grid[row][col] == Color.RED) {
                     System.out.print("R  ");
                 } else if (grid[row][col] == Color.BLUE) {
@@ -174,8 +174,8 @@ public class GameBoard extends JComponent implements MouseListener {
         int col = x / TILE_SIZE;
         
         // validate the coordinate
-        if(row >= 0 && row <= 7 
-                && col >= 0 && col <= 7){
+        if(row >= 0 && row <= 15 
+                && col >= 0 && col <= 15){
             click = new Coordinate(row,col);
         }
         
