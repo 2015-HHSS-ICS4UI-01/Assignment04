@@ -87,6 +87,9 @@ public class Game {
             board.removePiece(dal1.getrow(), dal1.getcol());
             dal3.crash();
             board.putPiece(dal1.getrow(), dal1.getcol(), Color.BLUE);
+            
+            board.setMessage("Doctor Died!");
+             
         }
         // if the second dalek is on a doctor the game ends and the piece turns blue
         if (mystic.getRow() == dal2.getrow() && mystic.getCol() == dal2.getcol()){
@@ -97,6 +100,8 @@ public class Game {
             board.removePiece(dal2.getrow(), dal2.getcol());
             dal2.crash();
             board.putPiece(dal2.getrow(), dal2.getcol(), Color.BLUE);
+            
+            board.setMessage("Doctor Died!");
         }
         // if the third dalek is on a doctor the game ends and the piece turns blue
         if (mystic.getRow() == dal3.getrow() && mystic.getCol() == dal3.getcol()){
@@ -107,6 +112,8 @@ public class Game {
             board.removePiece(dal3.getrow(), dal3.getcol());
             dal3.crash();
             board.putPiece(dal3.getrow(), dal3.getcol(), Color.BLUE);
+            
+            board.setMessage("Doctor Died!");
         }
         
         
@@ -149,6 +156,11 @@ public class Game {
            dal3.advanceTowards(mystic);
         }
         
+        //tells user that they have won if all daleks crash
+        else if(dal1.hasCrashed() && dal2.hasCrashed() && dal3.hasCrashed()){
+            board.setMessage("YOU WIN!");
+            running = false;
+        }
         // as long as the first dalek isn't crashed. place a new piece
         if(!dal1.hasCrashed()){
             board.putPiece(dal1.getrow(), dal1.getcol(), Color.YELLOW);
@@ -194,7 +206,6 @@ public class Game {
             dal3.crash();
             board.putPiece(dal3.getrow(), dal3.getcol(), Color.BLUE);
         }
-        
         
         }
     }
