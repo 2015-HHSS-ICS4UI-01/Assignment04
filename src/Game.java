@@ -18,14 +18,8 @@ public class Game {
 
         //makes all used variables
         GameBoard board = new GameBoard();
-        board.clearBoard();
-        int row, col, length = 3;
-        if (length > 55) {
-            length = 55;
-        } else if (length < 2) {
-            length = 2;
-        }
-        Dalek[] daleks = new Dalek[length];
+        int row, col;
+        Dalek[] daleks = new Dalek[3];
         Doctor doc;
         boolean gameover, overlapping;
         while (true) {
