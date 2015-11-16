@@ -18,10 +18,11 @@ import javax.swing.JFrame;
  */
 public class GameBoard extends JComponent implements MouseListener {
 
+    boolean restart;
     private Color[][] grid = new Color[8][8];
     private String message = "";
     private JFrame window;
-    private final int TILE_SIZE = 100;
+    private final int WIDTH = 100;
     private Coordinate click = null;
 
     /**
@@ -41,7 +42,7 @@ public class GameBoard extends JComponent implements MouseListener {
         // make the frame visible
         window.setVisible(true);
         //set the size of our board
-        this.setPreferredSize(new Dimension(8 * TILE_SIZE + 50, 8 * TILE_SIZE + 100));
+        this.setPreferredSize(new Dimension(8 * WIDTH + WIDTH / 2 + 1, 8 * WIDTH + (int) (WIDTH * 1.25 + 1)));
         // resize the window
         window.pack();
         //set the X
@@ -57,25 +58,23 @@ public class GameBoard extends JComponent implements MouseListener {
      */
     @Override
     public void paintComponent(Graphics g) {
+        g.drawRect(24, 24, 801, 801);
         for (int row = 0; row < 8; row++) {
             for (int col = 0; col < 8; col++) {
-                // alternate the colours of the grid
                 if ((row + col) % 2 == 0) {
-                    g.setColor(Color.WHITE);
+                    g.setColor(Color.LIGHT_GRAY);
                 } else {
-                    g.setColor(Color.BLACK);
+                    g.setColor(Color.GRAY);
                 }
-                // draws a single grid spot
-                g.fillRect(col * TILE_SIZE + TILE_SIZE / 4, row * TILE_SIZE + TILE_SIZE / 4, TILE_SIZE, TILE_SIZE);
-                // draw a piece
+                g.fillRect(col * WIDTH + WIDTH / 4, row * WIDTH + WIDTH / 4, WIDTH, WIDTH);
                 if (grid[row][col] != null) {
                     g.setColor(grid[row][col]);
-                    g.fillOval(col * TILE_SIZE + TILE_SIZE / 2, row * TILE_SIZE + TILE_SIZE / 2, TILE_SIZE / 2, TILE_SIZE / 2);
+                    g.fillOval(col * WIDTH + WIDTH / 2 - 1, row * WIDTH + WIDTH / 2 - 1, WIDTH / 2, WIDTH / 2);
                 }
             }
         }
         g.setColor(Color.BLACK);
-        g.drawString(message, TILE_SIZE/4, TILE_SIZE*8 + TILE_SIZE/2);
+        g.drawString(message, WIDTH / 4, WIDTH * 9);
     }
 
     /**
@@ -141,58 +140,45 @@ public class GameBoard extends JComponent implements MouseListener {
         System.out.println("");
     }
 
-    public Coordinate getClick(){
-        // wipe out the previous click
+    public Coordinate getClick() {
         click = null;
-        // wait for a click to happen
-        while(click == null){
-            // do nothing
-            // wait for click to happen
-            try{
-                Thread.sleep(1);
-            }catch(Exception e){
-                e.printStackTrace();
-            }
+        while (click == null) {
         }
         return click;
     }
-    
+
     @Override
     public void mouseClicked(MouseEvent e) {
-        
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
         // get x and y of click
         // shift them so the top and left boarders are gone
-        int x = e.getX() - TILE_SIZE/4;
-        int y = e.getY() - TILE_SIZE/4;
-        
+        int x = e.getX() - WIDTH / 4;
+        int y = e.getY() - WIDTH / 4;
+
         // get the row and column of the click
-        int row = y / TILE_SIZE;
-        int col = x / TILE_SIZE;
-        
+        int row = y / WIDTH;
+        int col = x / WIDTH;
+
         // validate the coordinate
-        if(row >= 0 && row <= 7 
-                && col >= 0 && col <= 7){
-            click = new Coordinate(row,col);
+        if (row >= 0 && row <= 7
+                && col >= 0 && col <= 7) {
+            click = new Coordinate(row, col);
         }
-        
+
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        
     }
 
     @Override
     public void mouseEntered(MouseEvent e) {
-        
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
-        
     }
 }
