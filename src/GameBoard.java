@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.image.BufferedImage;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 
@@ -24,9 +25,14 @@ public class GameBoard extends JComponent implements MouseListener {
     private final int TILE_SIZE = 100;
     private Coordinate click = null;
 
+
     /**
      * Creates a brand new empty 8x8 Board
      */
+    
+    
+    
+    
     public GameBoard() {
         // sets all positions to be null
         for (int row = 0; row < 8; row++) {
@@ -57,25 +63,38 @@ public class GameBoard extends JComponent implements MouseListener {
      */
     @Override
     public void paintComponent(Graphics g) {
+        
         for (int row = 0; row < 8; row++) {
             for (int col = 0; col < 8; col++) {
                 // alternate the colours of the grid
                 if ((row + col) % 2 == 0) {
+
                     g.setColor(Color.WHITE);
+                    
+                    
+
                 } else {
+                    
                     g.setColor(Color.BLACK);
+                    
+                    
                 }
                 // draws a single grid spot
                 g.fillRect(col * TILE_SIZE + TILE_SIZE / 4, row * TILE_SIZE + TILE_SIZE / 4, TILE_SIZE, TILE_SIZE);
                 // draw a piece
                 if (grid[row][col] != null) {
                     g.setColor(grid[row][col]);
+                    
                     g.fillOval(col * TILE_SIZE + TILE_SIZE / 2, row * TILE_SIZE + TILE_SIZE / 2, TILE_SIZE / 2, TILE_SIZE / 2);
+                    g.setColor(Color.BLUE);
+                    g.fillOval(col * TILE_SIZE + TILE_SIZE / 2, row * TILE_SIZE + TILE_SIZE / 2, TILE_SIZE / 5, TILE_SIZE / 5);
+                    g.fillOval(col * TILE_SIZE + TILE_SIZE / 2+25, row * TILE_SIZE + TILE_SIZE / 2, TILE_SIZE / 5, TILE_SIZE / 5);
                 }
             }
         }
         g.setColor(Color.BLACK);
         g.drawString(message, TILE_SIZE/4, TILE_SIZE*8 + TILE_SIZE/2);
+
     }
 
     /**
@@ -144,6 +163,7 @@ public class GameBoard extends JComponent implements MouseListener {
     public Coordinate getClick(){
         // wipe out the previous click
         click = null;
+
         // wait for a click to happen
         while(click == null){
             // do nothing
